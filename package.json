@@ -1,10 +1,10 @@
 {
   "name": "wallpaper-smartwatch",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "description": "UI verification for Raccoon Studio Android watchface editor",
   "scripts": {
-    "test": "node tools/test-smart-features.cjs && node tools/test-image-core.cjs && node tools/verify-ui.cjs && node tools/verify-image-editor.cjs && node tools/verify-connected-smart.cjs"
+    "test": "node tools/test-smart-features.cjs && node tools/test-image-core.cjs && node tools/verify-ui.cjs && node tools/verify-image-editor.cjs && node tools/verify-connected-smart.cjs && node tools/verify-landscape.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

@@ -1,7 +1,63 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#0c0b13"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>Raccoon Studio · Image Lab</title><link rel="stylesheet" href="studio.css"></head>
-<body><header><div class="brand"><b class="logo">R<span>•</span></b><div><strong>RACCOON <i>STUDIO</i></strong><small>IMAGE LAB / 2.2</small></div></div><button id="statusChip" class="chip">● LOCAL</button></header>
-<main><section data-screen="editor" class="screen active"><div class="intro"><span class="eyebrow">SEU PRÓXIMO MOSTRADOR</span><h1>Qualquer imagem.<br><em>No seu relógio.</em></h1><p>Escolha. Ajuste. Leve para o seu pulso.</p></div>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#fff7ef"><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><title>Raccoon Studio · Image Lab</title><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="landscape.css"></head>
+<body><header><div class="brand"><b class="logo">R<span>•</span></b><div><strong>RACCOON <i>STUDIO</i></strong><small>LANDSCAPE / 2.3</small></div></div><button id="statusChip" class="chip">● LOCAL</button></header>
+<main><section data-screen="editor" class="screen active"><div class="intro landscape-hero">
+<div class="hero-copy"><span class="eyebrow"><span class="sun-dot"></span> LANDSCAPE EDITION / 2.3</span>
+<h1>Seu estilo.<br><em>No seu tempo.</em></h1>
+<p>Uma imagem, mil possibilidades.<br>Crie um mostrador com a sua cara.</p>
+<div class="hero-actions"><button class="primary" id="heroImport">＋ Escolher minha imagem</button><button id="heroEditor">Abrir editor ↓</button></div>
+<div class="hero-points"><span>✦ Ajuste automático</span><span>⌁ Seu relógio conectado</span><span>◌ Tudo no seu celular</span></div>
+</div><div class="hero-card-wrap"><div aria-label="Card de paisagem com informações do projeto" class="card sunset-card" id="landscapeCard">
+<section aria-hidden="true" class="landscape-section">
+<div class="sky"></div>
+<div class="sun"></div>
+<div class="hill-1"></div>
+<div class="hill-2"></div>
+<div class="ocean">
+<div class="reflection"></div>
+<div class="reflection"></div>
+<div class="reflection"></div>
+<div class="reflection"></div>
+<div class="reflection"></div>
+<div class="shadow-hill-1"></div>
+<div class="shadow-hill-2"></div>
+</div>
+<div class="hill-3"></div>
+<div class="hill-4"></div>
+<div class="tree-1">
+<svg fill="#b77873" stroke="#b77873" stroke-width="0.00064" version="1.0" viewbox="0 0 64.00 64.00" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g stroke-width="0"></g>
+<g stroke-linecap="round" stroke-linejoin="round"></g>
+<g>
+<path d="M32,0C18.148,0,12,23.188,12,32c0,9.656,6.883,17.734,16,19.594V60c0,2.211,1.789,4,4,4s4-1.789,4-4v-8.406 C45.117,49.734,52,41.656,52,32C52,22.891,46.051,0,32,0z" fill="#b77873"></path>
+</g>
+</svg>
+</div>
+<div class="tree-2">
+<svg fill="#b77873" stroke="#b77873" stroke-width="0.00064" version="1.0" viewbox="0 0 64.00 64.00" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g stroke-width="0"></g>
+<g stroke-linecap="round" stroke-linejoin="round"></g>
+<g>
+<path d="M32,0C18.148,0,12,23.188,12,32c0,9.656,6.883,17.734,16,19.594V60c0,2.211,1.789,4,4,4s4-1.789,4-4v-8.406 C45.117,49.734,52,41.656,52,32C52,22.891,46.051,0,32,0z" fill="#b77873"></path>
+</g>
+</svg>
+</div>
+<div class="tree-3">
+<svg fill="#a16773" stroke="#a16773" stroke-width="0.00064" version="1.0" viewbox="0 0 64.00 64.00" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g stroke-width="0"></g>
+<g stroke-linecap="round" stroke-linejoin="round"></g>
+<g>
+<path d="M32,0C18.148,0,12,23.188,12,32c0,9.656,6.883,17.734,16,19.594V60c0,2.211,1.789,4,4,4s4-1.789,4-4v-8.406 C45.117,49.734,52,41.656,52,32C52,22.891,46.051,0,32,0z" fill="#a16773"></path>
+</g>
+</svg>
+</div>
+<div class="filter"></div>
+</section>
+<section class="content-section">
+<div class="weather-info"><div class="left-side"><span class="card-kicker">RACCOON</span><svg aria-hidden="true" class="card-mark" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="7" stroke="currentColor" stroke-width="1.4"></circle><path d="M12 8v4l3 2M8 2h8M8 22h8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.4"></path></svg><p>Seu estilo.</p></div><div class="right-side"><div class="location"><span>NO SEU TEMPO</span></div><p id="landscapeDate"></p><p class="temperature" id="landscapeClock"></p><small>Hora do celular</small></div></div>
+<div class="forecast"><div><span>Formato</span><strong id="cardShape">Redondo</strong></div><div class="separator"></div><div><span>Imagem</span><strong id="cardSize">480 × 480</strong></div><div class="separator"></div><div><span>Relógio</span><strong id="cardConnection">Sem conexão</strong></div></div>
+</section>
+</div><button id="useLandscape" class="landscape-apply">Usar esta paisagem no mostrador ↗</button></div></div>
 <div class="workspace"><div class="preview-column"><div class="stage"><div class="stage-top"><span id="sourceLabel">PRÉVIA DO MOSTRADOR</span><span id="resolutionLabel">480 × 480</span></div><div id="bezel" class="bezel round"><canvas id="preview" width="480" height="480" aria-label="Prévia editável. Arraste com um dedo; use dois dedos para ampliar e girar."></canvas></div><p class="gesture-help" id="gestureHelp">Arraste para mover · dois dedos para zoom e rotação</p></div><div class="import-row"><button class="primary" id="pickImage">＋ Escolher imagem</button><button id="useTemplate">Inventário</button></div><div class="panel"><button id="smartFit" class="primary wide">✦ Ajustar imagem automaticamente</button><label class="check"><input id="autoFitOnImport" type="checkbox" checked> Ajustar ao escolher uma imagem</label><label for="smartStrategy">Prioridade do ajuste</label><select id="smartStrategy"><option value="balanced">Equilibrado · preservar os detalhes</option><option value="preserve">Não cortar nada · fundo desfocado</option><option value="fill">Preencher a tela · aceita recortes</option></select><label class="check"><input id="autoDeviceSize" type="checkbox" checked> Usar resolução confirmada do relógio</label><p id="smartStatus" class="muted" role="status">Ajuste local, sem distorcer ou enviar sua imagem à internet. A resolução padrão é apenas uma opção, não uma confirmação do modelo.</p></div><div class="quick-tools"><button id="undo" title="Desfazer" aria-label="Desfazer">↶</button><button id="redo" title="Refazer" aria-label="Refazer">↷</button><button id="center">Centralizar</button><button id="rotate90">↻ 90°</button><button id="reset">Redefinir</button></div><div id="imageInfo" class="muted" aria-live="polite">JPG, PNG, WebP e GIF. Outros formatos dependem do Android.</div><div class="export-card"><label for="projectName">Nome da criação</label><input id="projectName" maxlength="60" value="Meu mostrador"><div class="export-row"><select id="exportType" aria-label="Formato do arquivo"><option value="png">PNG · melhor qualidade</option><option value="jpeg">JPG · menor arquivo</option><option value="webp">WebP · compacto</option><option value="gif">GIF · animado</option></select><button class="primary" id="exportImage">Exportar ↓</button></div><div class="export-row"><button id="saveProject">＋ Meu catálogo</button><button id="sendImage">Enviar ao relógio ↗</button></div><p class="muted">PNG, JPG e WebP são imagens estáticas. O relógio controla hora, data e sensores. GIF depende do firmware.</p><progress id="exportProgress" max="100" value="0" hidden></progress></div></div>
 <div class="controls"><details open><summary>01 <b>Enquadramento</b></summary><label for="fitMode">Ajuste automático</label><select id="fitMode" data-option="mode"><option value="cover">Preencher sem bordas · recorta o excesso</option><option value="contain">Imagem inteira · sem cortar</option><option value="blur">Imagem inteira + fundo desfocado</option><option value="stretch">Esticar para ocupar a tela</option></select><div class="range-field"><label for="zoom">Zoom <output id="zoomValue"></output></label><input id="zoom" data-option="zoom" data-scale="100" type="range" min="10" max="800" value="100"></div><div class="range-field"><label for="rotation">Rotação <output id="rotationValue"></output></label><input id="rotation" data-option="rotation" type="range" min="-180" max="180" value="0"></div><div class="two"><label class="check"><input id="flipX" type="checkbox" data-option="flipX"> Espelhar ↔</label><label class="check"><input id="flipY" type="checkbox" data-option="flipY"> Inverter ↕</label></div><button id="perspective" class="wide">Recortar por quatro cantos</button><p class="muted">Para fotos em perspectiva: marque a área da tela, sem a carcaça do relógio.</p></details>
 <details><summary>02 <b>Formato e resolução</b></summary><label for="shape">Formato</label><select id="shape" data-option="shape"><option value="round">Redondo</option><option value="square">Quadrado</option><option value="rounded">Retangular · cantos arredondados</option><option value="rectangle">Retangular · cantos retos</option></select><label for="preset">Tamanho da imagem</label><select id="preset"><option value="480x480">480 × 480</option><option value="466x466">466 × 466</option><option value="454x454">454 × 454</option><option value="400x400">400 × 400</option><option value="360x360">360 × 360</option><option value="240x240">240 × 240</option><option value="512x512">512 × 512</option><option value="custom">Personalizado</option></select><div class="two"><label>Largura<input id="outWidth" data-option="width" type="number" min="64" max="2048" value="480" inputmode="numeric"></label><label>Altura<input id="outHeight" data-option="height" type="number" min="64" max="2048" value="480" inputmode="numeric"></label></div><button id="useDeviceSize" class="wide">Usar resolução informada pelo relógio</button><p class="muted">64 a 2048 px por eixo. GIF: até 512 px por eixo. Redondo e quadrado mantêm lados iguais.</p></details>
@@ -15,4 +71,4 @@
 </main><nav aria-label="Navegação principal"><button data-nav="editor" class="active"><span>◉</span>Editor</button><button data-nav="gallery"><span>▦</span>Catálogo</button><button data-nav="device"><span>⌁</span>Relógio</button><button data-nav="help"><span>?</span>Ajuda</button></nav>
 <div id="toast" role="status" aria-live="polite"></div><input id="imageInput" type="file" accept="image/*" hidden><input id="projectInput" type="file" accept="application/json,.json" hidden>
 <dialog id="cropDialog"><h2>Selecione a tela</h2><p>Arraste os quatro cantos: superior esquerdo, superior direito, inferior direito e inferior esquerdo. A imagem será retificada.</p><canvas id="cropCanvas" width="640" height="640"></canvas><p class="muted">GIF: a correção cria uma imagem estática do quadro atual.</p><div class="export-row"><button id="cropCancel">Cancelar</button><button id="cropApply" class="primary">Aplicar recorte</button></div></dialog>
-<script src="face.js"></script><script src="studio-core.js"></script><script src="smart-fit.js"></script><script src="device-list.js"></script><script src="studio.js"></script></body></html>
+<script src="face.js"></script><script src="studio-core.js"></script><script src="smart-fit.js"></script><script src="device-list.js"></script><script src="studio.js"></script><script src="landscape.js"></script></body></html>

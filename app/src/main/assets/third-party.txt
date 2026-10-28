@@ -709,3 +709,7 @@ Jieli-Apache-2.0.txt
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+
+LANDSCAPE EDITION
+A paisagem e a composição do card foram adaptadas do CSS/HTML fornecido pelo usuário em card(1).txt. A autoria original não é informada nesse arquivo. Os textos de clima demonstrativos foram substituídos por informações reais do projeto. A primeira linha, alheia ao código, não faz parte da interface.

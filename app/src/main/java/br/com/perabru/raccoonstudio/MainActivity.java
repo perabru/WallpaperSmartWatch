@@ -58,13 +58,14 @@ public final class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
-        getWindow().setStatusBarColor(Color.rgb(7,12,18));
-        getWindow().setNavigationBarColor(Color.rgb(7,12,18));
+        getWindow().setStatusBarColor(Color.rgb(255,247,239));
+        getWindow().setNavigationBarColor(Color.rgb(255,247,239));
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundColor(Color.rgb(7,12,18));
+        root.setBackgroundColor(Color.rgb(255,247,239));
         web = new WebView(this);
         root.addView(web, new FrameLayout.LayoutParams(-1,-1));
         setContentView(root);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         if (Build.VERSION.SDK_INT >= 30) {
             root.setOnApplyWindowInsetsListener((view, insets) -> {
                 android.graphics.Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
@@ -81,7 +82,7 @@ public final class MainActivity extends Activity {
         settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setMediaPlaybackRequiresUserGesture(true);
-        web.setBackgroundColor(Color.rgb(7,12,18));
+        web.setBackgroundColor(Color.rgb(255,247,239));
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
         web.setWebChromeClient(new WebChromeClient() {
             @Override public boolean onJsAlert(WebView view,String url,String message,JsResult result) {
@@ -107,7 +108,7 @@ public final class MainActivity extends Activity {
                     String path=uri.getPath();
                     if(path!=null&&path.startsWith("/assets/")){
                         String name=path.substring(8);
-                        if(name.equals("index.html")||name.equals("styles.css")||name.equals("face.js")||name.equals("app.js")||name.equals("jill-portrait.png")||name.equals("studio.html")||name.equals("studio.css")||name.equals("studio.js")||name.equals("smart-fit.js")||name.equals("device-list.js")||name.equals("studio-core.js")){
+                        if(name.equals("index.html")||name.equals("styles.css")||name.equals("face.js")||name.equals("app.js")||name.equals("jill-portrait.png")||name.equals("studio.html")||name.equals("landscape.css")||name.equals("landscape.js")||name.equals("studio.css")||name.equals("studio.js")||name.equals("smart-fit.js")||name.equals("device-list.js")||name.equals("studio-core.js")){
                             String mime=name.endsWith(".html")?"text/html":name.endsWith(".css")?"text/css":name.endsWith(".js")?"application/javascript":"image/png";
                             try{return new WebResourceResponse(mime,"UTF-8",getAssets().open(name));}catch(java.io.IOException ignored){}
                         }
@@ -127,7 +128,7 @@ public final class MainActivity extends Activity {
     }
 
     private JSONObject nativeInfo() {
-        return object("appVersion","2.2.0","connectedDeviceCatalog",true,"androidVersion",Build.VERSION.RELEASE,
+        return object("appVersion","2.3.0","connectedDeviceCatalog",true,"androidVersion",Build.VERSION.RELEASE,
             "androidSdk",Build.VERSION.SDK_INT,"phoneManufacturer",Build.MANUFACTURER,
             "phoneModel",Build.MODEL,"nativeBluetooth",true,"customBackgroundSupported",true,
             "transport","jieli_rcsp","transferEnabled",false,"capabilityCheckRequired",true);
