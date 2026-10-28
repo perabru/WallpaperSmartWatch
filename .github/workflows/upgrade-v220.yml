@@ -1,0 +1,61 @@
+name: Aplicar atualizacao 2.2.0
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.upgrade/v2.2.0.xz', '.github/workflows/upgrade-v220.yml']
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: raccoon-upgrade-220
+  cancel-in-progress: false
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Aplicar fonte com integridade verificada
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,lzma
+          from pathlib import Path
+          raw=lzma.decompress(Path('.upgrade/v2.2.0.xz').read_bytes())
+          assert hashlib.sha256(raw).hexdigest()=='2130d66ac18fb140ec8838859c10833697f9a1731bd237e44501850f77e3973e'
+          changes=json.loads(raw); outputs=[]
+          for name,change in changes.items():
+              p=Path(name)
+              assert not p.is_absolute() and '..' not in p.parts
+              assert p.parts[0] in ('app','tools','docs','build.sh','package.json','package-lock.json','.github')
+              current=p.read_bytes() if p.exists() else b''
+              if hashlib.sha256(current).hexdigest()==change['sha256']: continue
+              if 'content' in change:
+                  assert not p.exists(), 'Unexpected existing file: '+name
+                  text=change['content']
+              else:
+                  assert hashlib.sha256(current).hexdigest()==change['oldSha256'], 'Source conflict: '+name
+                  text=current.decode('utf-8')
+                  for start,end,replacement in reversed(change['edits']):
+                      assert 0<=start<=end<=len(text)
+                      text=text[:start]+replacement+text[end:]
+              data=text.encode('utf-8')
+              assert hashlib.sha256(data).hexdigest()==change['sha256'], 'Result mismatch: '+name
+              assert not name.startswith('.github/'), 'Workflow must be updated in parent commit'
+              outputs.append((p,data))
+          for p,data in outputs:
+              p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes(data)
+          print('Verified source files:',len(changes),'updated:',len(outputs))
+          PY
+      - name: Publicar fonte e executar testes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app tools docs build.sh package.json package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat: connected-device discovery and automatic image fitting 2.2.0'
+            git push origin HEAD:main
+          fi
+          gh workflow run android.yml --repo "$GITHUB_REPOSITORY" --ref main

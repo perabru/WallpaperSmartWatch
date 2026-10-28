@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: RaccoonStudio-2.1.0-build
+          name: RaccoonStudio-2.2.0-build
           path: |
             build/RaccoonStudio-debug.apk
             build/RaccoonStudio-source.zip
