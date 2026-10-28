@@ -1,4 +1,4 @@
-name: Aplicar identidade Landscape 2.3
+name: Conferir contraste Landscape 2.3
 on:
   push:
     branches: [main]
@@ -7,52 +7,40 @@ on:
 permissions:
   contents: write
   actions: write
-concurrency:
-  group: raccoon-upgrade-230
-  cancel-in-progress: false
 jobs:
   upgrade:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
-      - name: Aplicar arquivos conferidos por SHA-256
+      - name: Aplicar correcao de contraste verificada
         run: |
           python3 - <<'PY'
           import hashlib,json,lzma
           from pathlib import Path
-          data=lzma.decompress(Path('.upgrade/v230.xz').read_bytes())
-          assert hashlib.sha256(data).hexdigest()=='bfc953f26f7554fc7962318390c47be34a3ea16e0c7c3e8f42b78139c94c627d'
-          changes=json.loads(data); root=Path.cwd().resolve(); pending=[]
+          raw=lzma.decompress(Path('.upgrade/v230.xz').read_bytes())
+          assert hashlib.sha256(raw).hexdigest()=='c37d8f2e8446d7580c3973d89dad281759ae28adb9ff6826c49536ca0a77a47c'
+          changes=json.loads(raw)
+          assert set(changes)=={'app/src/main/assets/styles.css'}
           for name,item in changes.items():
-              path=(root/name).resolve()
-              assert path.is_relative_to(root) and not name.startswith(('/', '.git/'))
-              old=path.read_bytes() if path.exists() else None
-              if old is not None and hashlib.sha256(old).hexdigest()==item['sha256']: continue
-              if 'content' in item:
-                  assert old is None, 'Unexpected existing file: '+name
-                  new=item['content'].encode()
-              else:
-                  assert old is not None and hashlib.sha256(old).hexdigest()==item['oldSha256'], 'Source changed: '+name
-                  text=old.decode()
-                  for start,end,value in reversed(item['edits']):
-                      assert 0<=start<=end<=len(text)
-                      text=text[:start]+value+text[end:]
-                  new=text.encode()
-              assert hashlib.sha256(new).hexdigest()==item['sha256'], 'Target mismatch: '+name
-              pending.append((path,new))
-          for path,data in pending:
-              path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data)
-          print('Verified and applied',len(pending),'files')
+              path=Path(name);old=path.read_bytes()
+              if hashlib.sha256(old).hexdigest()==item['sha256']: continue
+              assert hashlib.sha256(old).hexdigest()==item['oldSha256']
+              text=old.decode()
+              for start,end,value in reversed(item['edits']):
+                  assert 0<=start<=end<=len(text)
+                  text=text[:start]+value+text[end:]
+              data=text.encode();assert hashlib.sha256(data).hexdigest()==item['sha256']
+              path.write_bytes(data)
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add app build.sh package.json package-lock.json tools docs
+          git add app/src/main/assets/styles.css
           if ! git diff --cached --quiet; then
-            git commit -m 'feat: Landscape 2.3 com identidade do card e paisagem editavel'
+            git commit -m 'fix: contraste claro em todas as superficies do editor classico'
             git push origin HEAD:main
           fi
-      - name: Executar compilacao e testes da versao atualizada
+      - name: Validar compilacao e interface
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run android.yml --repo "$GITHUB_REPOSITORY" --ref main
