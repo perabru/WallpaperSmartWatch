@@ -47,6 +47,8 @@ def main():
         (destination/(filename+'.sha256')).write_text(digest(apk)+'  '+filename+'\n')
         outputs={'RaccoonStudio-source.zip':filename.replace('-assinado.apk','-codigo-fonte.zip'),'qa/image-editor-tests.json':'image-editor-tests.json','qa/image-core-tests.json':'image-core-tests.json','qa/Raccoon-Inventory-480.png':'Raccoon-Inventory-480.png','qa/Raccoon-Inventory-480-animado.gif':'Raccoon-Inventory-480-animado.gif'}
         if 'qa/connected-smart-tests.json' in z.namelist(): outputs['qa/connected-smart-tests.json']='connected-smart-tests.json'
+        if 'qa/landscape-tests.json' in z.namelist(): outputs['qa/landscape-tests.json']='landscape-tests.json'
+        if 'qa/Landscape-fundo-454.png' in z.namelist(): outputs['qa/Landscape-fundo-454.png']='Landscape-fundo-454.png'
         for member,output in outputs.items():
             entry=z.getinfo(member);require(entry.file_size<LIMIT,'Artifact member exceeds limit')
             (destination/output).write_bytes(z.read(entry))

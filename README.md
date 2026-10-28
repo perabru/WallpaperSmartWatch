@@ -1,36 +1,28 @@
-# WallpaperSmartWatch · Raccoon Studio 2.2 / Image Lab
+# Raccoon Studio 2.3.0 · Landscape Edition
 
-Editor Android de imagens e animações para mostradores, com consulta de dispositivos já conectados e ajuste automático de imagens. Interface em português, processamento local, sem conta, anúncios ou envio de fotos a servidores.
+Editor Android de imagens e animações para mostradores, agora com a identidade visual do card de paisagem fornecido pelo usuário.
 
-**[Baixar APK assinado 2.2.0](https://github.com/perabru/WallpaperSmartWatch/releases/download/v2.2.0/RaccoonStudio-2.2.0-assinado.apk)** · [Releases](https://github.com/perabru/WallpaperSmartWatch/releases) · [Novidades e limites](docs/ATUALIZACAO-2.2.md) · [Manual do Image Lab](docs/IMAGE_LAB.md)
+**[Baixar APK assinado 2.3.0](https://github.com/perabru/WallpaperSmartWatch/releases/download/v2.3.0/RaccoonStudio-2.3.0-assinado.apk)** · [Releases](https://github.com/perabru/WallpaperSmartWatch/releases) · [Nova identidade visual](docs/LANDSCAPE-2.3.md)
 
-## Encontrar o relógio conectado
+## Card e identidade visual
 
-Abra **Relógio → Encontrar meu relógio conectado**, autorize Dispositivos próximos e selecione **Verificar** no provável relógio. A lista consulta BLE, chamadas/áudio e pareados disponibilizados pelo Android, elimina duplicatas por endereço e lembra sua escolha. A consulta não abre GATT nem envia comandos ao dispositivo.
+Céu rosa/dourado, sol branco, oceano e reflexos, morros e árvores em terracota/malva, base clara, cantos arredondados e sombra deslocada. A referência fornecida está integrada ao editor, não apenas usada como inspiração da paleta. As informações do card mostram a hora do celular, o formato e tamanho configurados para a imagem e o estado da conexão no app; não exibem clima fictício.
 
-Você pode manter o MActive Pro conectado para procurar o aparelho. A lista não reutiliza a sessão do outro aplicativo. Se houver disputa pela conexão durante a verificação ou o envio, desconecte-o temporariamente do MActive Pro. O canal de chamadas isolado não permite instalar imagens. Nomes e classes são pistas, não confirmação do modelo. Se o Android fornecer uma lista parcial, use **Buscar nas proximidades**.
-
-## Ajustar a imagem automaticamente
-
-Ao escolher uma imagem, o app usa uma análise local de detalhes e contraste para escolher enquadramento proporcional ou imagem inteira com fundo desfocado. Não usa esticamento automaticamente. No formato circular, o modo de preservação mantém a imagem dentro do círculo, com margem. Há prioridades Equilibrado, Não cortar nada e Preencher a tela. Use Desfazer para comparar ou desative o automático.
-
-A resolução só é adotada como confirmada quando o relógio a informa após a verificação de compatibilidade. Até lá, é uma configuração manual. Edições manuais de rotação, zoom, posição e cor não são apagadas ao mudar a resolução; use o botão de ajuste para recalcular deliberadamente. O ajuste é heurístico, não reconhece a importância semântica de todos os objetos. Confira a prévia.
+**Usar esta paisagem no mostrador** cria um fundo estático editável, sem horário congelado. **Escolher minha imagem** abre o seletor nativo. **Abrir editor** leva diretamente aos ajustes. O card e os controles são responsivos; a animação decorativa respeita movimento reduzido.
 
 ## Recursos preservados
 
-Importação JPG/PNG/WebP/GIF; conversão nativa de outros formatos reconhecidos pelo Android; arrastar, pinça, rotação, espelhamento, desfazer/refazer; quatro cantos para correção de perspectiva; máscaras redonda, quadrada, retangular e arredondada; resolução de 64 a 2048 px; brilho, contraste, saturação, texto; catálogo local com projetos JSON; exportação PNG/JPG/WebP e GIF até 512 px por eixo; traçado ECG decorativo. Hora é apenas prévia, não fica congelada na imagem.
+Ajuste automático proporcional, preservação com fundo desfocado, zoom/posição/rotação manuais, desfazer/refazer, recorte de perspectiva por quatro cantos, formatos de tela, catálogo local e projetos JSON; importação JPG/PNG/WebP/GIF e formatos reconhecidos pelo Android; exportação PNG/JPG/WebP/GIF. A barra ECG é decorativa, não uma leitura de saúde. O processamento é local, sem conta e sem upload das fotos.
 
-## Instalação e atualização
+A tela Relógio consulta dispositivos conectados e pareados que o Android disponibiliza e distingue conexões BLE de chamadas/áudio. O nome comercial é uma pista, não uma confirmação de modelo ou protocolo. A consulta não reutiliza a sessão interna do MActive Pro. Se houver disputa pela conexão, desconecte-o temporariamente no outro aplicativo e tente novamente.
 
-Android 8.0 ou superior. Baixe o APK da release e abra no celular. **Esta versão mantém a assinatura da release 2.1.0**, permitindo atualizar essa instalação sem desinstalar. Versões antigas e APKs de teste com outras chaves podem exigir reinstalação: exporte os projetos antes, pois desinstalar apaga o catálogo. A chave privada não é publicada no GitHub. O APK dos testes do GitHub Actions usa outra chave; instale o arquivo da release.
+## Instalação e limites
 
-## Bluetooth: limite importante
+Android 8+. A assinatura de distribuição é a mesma da release 2.1.0, permitindo atualizar essa instalação sem desinstalar. Os APKs de teste do Actions usam outra assinatura. Antes de qualquer desinstalação, exporte seus projetos: desinstalar remove o catálogo local.
 
-O adaptador JieLi envia **fundo PNG estático** somente após confirmação do perfil, autenticação, capacidades e resolução. Não envia GIF animado nem compila um mostrador nativo arbitrário. Horas, data e sensores no relógio seguem o firmware.
+**Não houve teste físico no Watch 8 Ultra do usuário nem execução nativa em um celular.** A integração JieLi continua enviando apenas fundo PNG estático após autenticação e confirmação de capacidades/resolução. Estar conectado no Android não confirma compatibilidade. A animação no card do celular não significa suporte a mostrador animado no relógio.
 
-**Não houve teste físico no Watch 8 Ultra do usuário nem teste de execução nativa em um celular nesta entrega.** Os testes de interface usam eventos TEST ONLY. Dispositivo conectado ao Android não equivale a compatível para transferência.
-
-## Desenvolvimento e verificação
+## Compilação e testes
 
 ```sh
 python3 tools/fetch-dependencies.py
@@ -41,10 +33,10 @@ npx playwright install chromium
 npm test
 ```
 
-JDK 17+, Android Platform 35 e Build-Tools 35.0.0; configure ANDROID_SDK_ROOT e JAVA_HOME. Android Studio/Gradle também são suportados pelo projeto. Os relatórios ficam em build/qa. A [execução validada 2.2.0](https://github.com/perabru/WallpaperSmartWatch/actions/runs/40715398114) inclui testes de geometria/GIF, ajustes automáticos, importação/exportação, persistência, interface em larguras de 320 a 1024 px e contrato da ponte nativa. Não são testes de rádio Bluetooth.
+JDK 17+, Android Platform 35 e Build-Tools 35.0.0. Configure ANDROID_SDK_ROOT e JAVA_HOME. Relatórios e capturas ficam em build/qa. A suíte verifica regras de transferência, geometria/GIF, persistência, importação/exportação, UI e tema Landscape em larguras de 320 a 1366 px. Os testes nativos da UI usam eventos TEST ONLY, não rádio Bluetooth real.
 
-ConnectedDeviceCatalog.java consulta as APIs públicas do Android. device-list.js agrupa e ordena dispositivos sem conceder compatibilidade. smart-fit.js implementa o ajuste local. O Image Lab permanece em studio.html/studio.js/studio-core.js. A integração de transmissão e o editor clássico foram preservados.
+A composição original do card está em CSS com seletores isolados em landscape.css; landscape.js atualiza as informações e gera o fundo. studio.html/studio.js/studio-core.js mantêm o editor. ConnectedDeviceCatalog.java e device-list.js preservam a descoberta do Android. A chave privada de assinatura não faz parte do repositório.
 
-## Licenças e investigação
+## Créditos
 
-Consulte [INVESTIGACAO.md](docs/INVESTIGACAO.md), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) e licenses/. O inventário é arte de fã; marcas e personagens pertencem aos respectivos titulares.
+A referência visual foi fornecida pelo usuário em card(1).txt; esse arquivo não informa autoria original. A paisagem e a composição foram adaptadas, com dados climáticos demonstrativos substituídos. Consulte THIRD_PARTY_NOTICES.md e licenses/ para os componentes restantes. O inventário é arte de fã; marcas e personagens pertencem aos respectivos titulares.
