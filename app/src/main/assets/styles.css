@@ -7,3 +7,17 @@
 
 /* Shared Landscape visual identity; artwork canvas retains its own colors. */
 .app button{border-radius:12px}.app .card,.app .panel{border-radius:20px}.bottom-nav{background:#fffaf5;color:#856b75;border-color:#ead9d2}.app input,.app select{color:#51343e;background:#fffaf5;border-color:#dcc2b5}.app .primary,.app .btn-primary{background:#994961;color:#fff9f3}.app p{color:#79616b}
+
+/* Landscape contrast pass for every legacy surface; watch artwork is unchanged. */
+.hero-card{background:radial-gradient(ellipse at 50% 58%,#f5d7c3 0,#fff1e5 75%);border-color:#e1c7ba}
+.watch-case{background:linear-gradient(135deg,#ebc6a5,#ae7b80 35%,#6f4b5c 65%,#d5b1a2)}
+.hero-top,.hero-top-right,.hero-bottom,.face-heading p,.preview-note,.section-note,.field small,.field label span,.toggle-row small,.dimensions>span,.dimensions>div>span,.device-row small,.device-row .signal,.device-card p,.detail-list dt,.diagnostic-help,.app-version,.licenses-button{color:#7d626e}
+h1 span,.edition,.edition b{color:#a16773}
+.compatibility-card,.catalog-item,.editor-preview,.device-card,.device-row,.segmented{background:#fffaf4;border-color:#e5cfc2}
+.icon-ring{background:#f0d8ce;color:#9c5b71}.catalog-item button,.info-note,.info-note strong,.detail-list dd,.diagnostic-help summary{color:#704b5a}
+.tag{border-color:#d4b7aa;color:#805268}.tag.ready-tag{color:#456b4b;border-color:#a4b99b}.tag.error-tag{color:#9b3e40;border-color:#d5a4a2}
+.button.primary{color:#fffaf4}.button.secondary{background:#f2ded4;border-color:#dfc0b4;color:#714351}.button.ghost{border-color:#d6b6aa;color:#805366}.button.locked{background:#efe7df;color:#84746e;border-color:#cdbfb2}
+.segmented button{color:#886675}.segmented button.selected,.device-row button{background:#efd8d0;color:#90455f}
+.transfer-card,.transfer-card.ready{background:#fff5e7;border-color:#e2c8a6}.transfer-card.failed{background:#fff0ea;border-color:#c79791}.transfer-card p,.transfer-card small,.progress-label,.send-preview span{color:#78596a}.amber-tag{color:#93662d;border-color:#d1b78e}
+.toast{background:#593747;color:#fffaf2;border-color:#83556a}dialog{background:#fff9f1;color:#51343f;border-color:#d6b7aa}dialog p{color:#785968}
+input[type=checkbox]{background:#d8c8bd}input[type=checkbox]:after{background:#fff9f3}input[type=checkbox]:checked:after{background:#fff9f3}progress::-webkit-progress-bar{background:#eadacf}
