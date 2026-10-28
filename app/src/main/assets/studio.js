@@ -3,7 +3,8 @@
 'use strict';
 const $=id=>document.getElementById(id),C=WatchCore,N=window.Android,canvas=$('preview');
 let opts=C.options({name:'Raccoon Inventory',ecg:true,ecgX:.34,ecgY:.488,ecgW:.38,ecgH:.105}),source={kind:'template',dataUrl:'',name:'Raccoon Inventory'},image=null,gif=null,frameCanvas=null,frameIndex=-1,screen='editor',paused=false,exporting=false,transferBusy=false,connected=false,connecting=false,scanning=false,caps={},report={},toastTimer,saveTimer,loadId=0,ready=false,lastDraw=0,animationStart=performance.now(),history=[],future=[],changeBefore=null;
-let knownDevices=[],nearbyDevices=[],lastDeviceSize='',smartPreference=true;
+let knownDevices=[],nearbyDevices=[],lastDeviceSize='',smartPreference=true,manualLayout=false;
+const layoutKeys=new Set(['mode','zoom','x','y','rotation','flipX','flipY','brightness','contrast','saturation']);
 try{smartPreference=localStorage.getItem('raccoon-auto-fit')!=='false';}catch(e){}
 $('autoFitOnImport').checked=smartPreference;
 const MAX_BYTES=24*1024*1024,BUSY=new Set(['preparing','converting','transferring','uploading','activating','verifying','cancelling']);
@@ -16,10 +17,10 @@ function makeCanvas(w,h){const c=document.createElement('canvas');c.width=w;c.he
 function snapshot(){return{format:'raccoon-studio/image-project',schemaVersion:2,options:{...opts},source:{...source}};}
 function remember(before){if(!before)return;history.push(before);if(history.length>25)history.shift();future=[];syncHistory();}
 function syncHistory(){$('undo').disabled=!history.length||exporting;$('redo').disabled=!future.length||exporting;}
-async function restore(s){await setSource(s.source,false);opts=C.options(s.options);sync();scheduleSave();render();}
+async function restore(s){await setSource(s.source,false);opts=C.options(s.options);manualLayout=true;sync();scheduleSave();render();}
 $('undo').onclick=async()=>{if(!history.length)return;future.push(snapshot());const s=history.pop();await restore(s);syncHistory();};
 $('redo').onclick=async()=>{if(!future.length)return;history.push(snapshot());const s=future.pop();await restore(s);syncHistory();};
-function update(patch,saveHistory=true){if(exporting)return;if(saveHistory)remember(snapshot());opts=C.options({...opts,...patch});if(smartPreference&&source.kind==='image'&&Object.keys(patch).every(k=>['width','height','shape'].includes(k)))smartFit(false);sync();render();scheduleSave();}
+function update(patch,saveHistory=true){if(exporting)return;if(saveHistory)remember(snapshot());if(Object.keys(patch).some(k=>layoutKeys.has(k)))manualLayout=true;opts=C.options({...opts,...patch});if(!manualLayout&&smartPreference&&source.kind==='image'&&Object.keys(patch).every(k=>['width','height','shape'].includes(k)))smartFit(false);sync();render();scheduleSave();}
 function smartFit(record=true){
  if(exporting||!window.SmartFit)return;
  if(source.kind==='template'){$('smartStatus').textContent='O inventário já tem enquadramento próprio. Escolha uma imagem para ajustá-la automaticamente.';return;}
@@ -29,7 +30,7 @@ function smartFit(record=true){
  const ctx=sample.getContext('2d',{willReadFrequently:true});ctx.drawImage(src,0,0,sample.width,sample.height);
  const analysis=SmartFit.analyze(ctx.getImageData(0,0,sample.width,sample.height));
  const result=SmartFit.plan(analysis,iw,ih,opts.width,opts.height,opts.shape,$('smartStrategy').value);
- if(record)remember(snapshot());opts=C.options({...opts,...result.patch});
+ if(record)remember(snapshot());opts=C.options({...opts,...result.patch});manualLayout=false;
  $('smartStatus').textContent=result.message+' Ajuste local e reversível; confira a prévia.';
  sync();render();scheduleSave();return result;
 }
@@ -66,7 +67,7 @@ function render(){draw(canvas,{preview:true,time:paused?0:performance.now()-anim
 function tick(now){if(!document.hidden&&screen==='editor'&&!exporting&&(opts.ecg||gif||opts.clock)&&now-lastDraw>(opts.ecg||gif?65:1000)){render();lastDraw=now;}requestAnimationFrame(tick);}
 for(const el of document.querySelectorAll('[data-option]')){
  el.addEventListener('pointerdown',()=>{changeBefore=snapshot();});el.addEventListener('focus',()=>{if(!changeBefore)changeBefore=snapshot();});
- const applyControl=()=>{const k=el.dataset.option;let value=el.type==='checkbox'?el.checked:el.type==='number'||el.type==='range'?+el.value:el.value;if(el.dataset.scale)value/=+el.dataset.scale;opts=C.options({...opts,[k]:value});if(el.id==='shape'&&['rectangle','rounded'].includes(opts.shape)&&opts.width===opts.height)opts.height=Math.round(opts.width*1.22);if(smartPreference&&source.kind==='image'&&['width','height','shape'].includes(k))smartFit(false);sync();render();scheduleSave();};
+ const applyControl=()=>{const k=el.dataset.option;let value=el.type==='checkbox'?el.checked:el.type==='number'||el.type==='range'?+el.value:el.value;if(el.dataset.scale)value/=+el.dataset.scale;if(layoutKeys.has(k))manualLayout=true;opts=C.options({...opts,[k]:value});if(el.id==='shape'&&['rectangle','rounded'].includes(opts.shape)&&opts.width===opts.height)opts.height=Math.round(opts.width*1.22);if(!manualLayout&&smartPreference&&source.kind==='image'&&['width','height','shape'].includes(k))smartFit(false);sync();render();scheduleSave();};
  el.addEventListener('input',()=>{if(el.type!=='number')applyControl();});
  el.addEventListener('change',()=>{if(el.type==='number')applyControl();remember(changeBefore);changeBefore=null;});el.addEventListener('blur',()=>{changeBefore=null;});
 }
@@ -81,7 +82,7 @@ canvas.addEventListener('pointerdown',e=>{e.preventDefault();if(exporting)return
 canvas.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId)||!gesture)return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});const p=[...pointers.values()],a=gesture.points,b=canvas.getBoundingClientRect();let patch={};
  if(p.length===1&&a.length===1){patch.x=gesture.o.x+(p[0].x-a[0].x)/b.width;patch.y=gesture.o.y+(p[0].y-a[0].y)/b.height;}
  if(p.length>=2&&a.length>=2){const dist=z=>Math.hypot(z[1].x-z[0].x,z[1].y-z[0].y),ang=z=>Math.atan2(z[1].y-z[0].y,z[1].x-z[0].x);const ratio=dist(p)/Math.max(5,dist(a));const delta=ang(p)-ang(a);const anchorX=(a[0].x+a[1].x)/2-b.left-b.width/2,anchorY=(a[0].y+a[1].y)/2-b.top-b.height/2;const oldX=gesture.o.x*b.width-anchorX,oldY=gesture.o.y*b.height-anchorY;patch.zoom=gesture.o.zoom*ratio;patch.rotation=((gesture.o.rotation+delta*180/Math.PI+540)%360)-180;patch.x=((p[0].x+p[1].x)/2-b.left-b.width/2+(oldX*Math.cos(delta)-oldY*Math.sin(delta))*ratio)/b.width;patch.y=((p[0].y+p[1].y)/2-b.top-b.height/2+(oldX*Math.sin(delta)+oldY*Math.cos(delta))*ratio)/b.height;}
- opts=C.options({...opts,...patch});sync();render();});
+ manualLayout=true;opts=C.options({...opts,...patch});sync();render();});
 function endPointer(e){if(!pointers.has(e.pointerId))return;pointers.delete(e.pointerId);if(pointers.size)startGesture();else{gesture=null;remember(changeBefore);changeBefore=null;scheduleSave();}}
 for(const t of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(t,endPointer);
 canvas.addEventListener('wheel',e=>{e.preventDefault();update({zoom:opts.zoom*Math.exp(-e.deltaY*.001)});},{passive:false});
@@ -102,7 +103,7 @@ async function setSource(s,record=true){
    const scale=Math.min(1,2048/Math.max(nextImage.naturalWidth,nextImage.naturalHeight));if(scale<1){const down=makeCanvas(Math.round(nextImage.naturalWidth*scale),Math.round(nextImage.naturalHeight*scale));down.getContext('2d').drawImage(nextImage,0,0,down.width,down.height);nextData=down.toDataURL('image/png');nextImage=down;toast('Imagem reduzida para até 2048 px para edição segura.');}
   }
  }
- if(id!==loadId)return false;if(record)remember(before);source={kind:s.kind,dataUrl:nextData,name:nextName};image=nextImage;gif=nextGif;frameIndex=-1;frameCanvas=gif?makeCanvas(gif.width,gif.height):null;animationStart=performance.now();
+ if(id!==loadId)return false;if(record)remember(before);manualLayout=!record;source={kind:s.kind,dataUrl:nextData,name:nextName};image=nextImage;gif=nextGif;frameIndex=-1;frameCanvas=gif?makeCanvas(gif.width,gif.height):null;animationStart=performance.now();
  opts=C.options({...opts,ecg:record?s.kind==='template':opts.ecg,name:s.kind==='template'?'Raccoon Inventory':nextName.replace(/\.[^.]+$/,'').slice(0,60),x:0,y:0,zoom:1,rotation:0,flipX:false,flipY:false});
  const sw=gif?gif.width:image&&(image.naturalWidth||image.width),sh=gif?gif.height:image&&(image.naturalHeight||image.height);$('imageInfo').textContent=s.kind==='template'?'Arte de inventário · hora e data ficam livres para o relógio.':`${sw} × ${sh} px · ${gif?gif.frames.length+' quadros · ':''}${nextName}`;
  if(record&&s.kind==='image'&&smartPreference)smartFit(false);
