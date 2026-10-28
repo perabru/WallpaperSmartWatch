@@ -1,34 +1,34 @@
-# WallpaperSmartWatch · Raccoon Studio 2.1 / Image Lab
+# WallpaperSmartWatch · Raccoon Studio 2.2 / Image Lab
 
-Editor Android de imagens e animações para mostradores. Interface em português, processamento local, sem conta, anúncios ou envio de fotos a servidores.
+Editor Android de imagens e animações para mostradores, com consulta de dispositivos já conectados e ajuste automático de imagens. Interface em português, processamento local, sem conta, anúncios ou envio de fotos a servidores.
 
-**[Baixar APK assinado 2.1.0](https://github.com/perabru/WallpaperSmartWatch/releases/download/v2.1.0/RaccoonStudio-2.1.0-assinado.apk)** · [Releases](https://github.com/perabru/WallpaperSmartWatch/releases) · [Manual do Image Lab](docs/IMAGE_LAB.md)
+**[Baixar APK assinado 2.2.0](https://github.com/perabru/WallpaperSmartWatch/releases/download/v2.2.0/RaccoonStudio-2.2.0-assinado.apk)** · [Releases](https://github.com/perabru/WallpaperSmartWatch/releases) · [Novidades e limites](docs/ATUALIZACAO-2.2.md) · [Manual do Image Lab](docs/IMAGE_LAB.md)
 
-## O que mudou
+## Encontrar o relógio conectado
 
-- Importe JPG, PNG, WebP e GIF. O seletor nativo converte outros formatos reconhecidos pelo Android, inclusive HEIC em aparelhos compatíveis.
-- Arraste, amplie com dois dedos, gire, espelhe, centralize e desfaça/refaça alterações.
-- Preencha recortando, mantenha a imagem inteira, use fundo desfocado ou estique livremente.
-- Corrija uma foto em perspectiva escolhendo os quatro cantos da tela.
-- Escolha máscara circular, quadrada, retangular ou arredondada e resolução de 64 a 2048 px.
-- Ajuste brilho, contraste, saturação, fundo e texto. Hora é apenas prévia, não fica congelada no PNG.
-- Anime um traçado ECG decorativo; importe e ajuste GIFs. Exporte PNG, JPG, WebP ou GIF (até 512 px por eixo).
-- Salve projetos completos no catálogo local (IndexedDB), com imagem e ajustes. Faça backup em JSON portátil.
-- O editor clássico e a integração JieLi foram preservados. A tela principal agora é o Image Lab.
+Abra **Relógio → Encontrar meu relógio conectado**, autorize Dispositivos próximos e selecione **Verificar** no provável relógio. A lista consulta BLE, chamadas/áudio e pareados disponibilizados pelo Android, elimina duplicatas por endereço e lembra sua escolha. A consulta não abre GATT nem envia comandos ao dispositivo.
+
+Você pode manter o MActive Pro conectado para procurar o aparelho. A lista não reutiliza a sessão do outro aplicativo. Se houver disputa pela conexão durante a verificação ou o envio, desconecte-o temporariamente do MActive Pro. O canal de chamadas isolado não permite instalar imagens. Nomes e classes são pistas, não confirmação do modelo. Se o Android fornecer uma lista parcial, use **Buscar nas proximidades**.
+
+## Ajustar a imagem automaticamente
+
+Ao escolher uma imagem, o app usa uma análise local de detalhes e contraste para escolher enquadramento proporcional ou imagem inteira com fundo desfocado. Não usa esticamento automaticamente. No formato circular, o modo de preservação mantém a imagem dentro do círculo, com margem. Há prioridades Equilibrado, Não cortar nada e Preencher a tela. Use Desfazer para comparar ou desative o automático.
+
+A resolução só é adotada como confirmada quando o relógio a informa após a verificação de compatibilidade. Até lá, é uma configuração manual. Edições manuais de rotação, zoom, posição e cor não são apagadas ao mudar a resolução; use o botão de ajuste para recalcular deliberadamente. O ajuste é heurístico, não reconhece a importância semântica de todos os objetos. Confira a prévia.
+
+## Recursos preservados
+
+Importação JPG/PNG/WebP/GIF; conversão nativa de outros formatos reconhecidos pelo Android; arrastar, pinça, rotação, espelhamento, desfazer/refazer; quatro cantos para correção de perspectiva; máscaras redonda, quadrada, retangular e arredondada; resolução de 64 a 2048 px; brilho, contraste, saturação, texto; catálogo local com projetos JSON; exportação PNG/JPG/WebP e GIF até 512 px por eixo; traçado ECG decorativo. Hora é apenas prévia, não fica congelada na imagem.
 
 ## Instalação e atualização
 
-Android 8.0 ou superior. Baixe o APK da release e abra no celular. Autorize a instalação para o navegador/gerenciador usado.
-
-**A assinatura desta release 2.1.0 é nova.** A chave privada das versões antigas não estava no repositório. Antes de remover uma versão anterior, exporte seus projetos. Se o Android recusar a atualização por assinatura diferente, desinstale a versão antiga e instale esta. Desinstalar apaga o catálogo local. A chave privada da release não é publicada no GitHub.
-
-O APK de GitHub Actions é assinado para testes com outra chave. Use a release para a instalação distribuída. A release contém o APK verificado e seu SHA-256.
+Android 8.0 ou superior. Baixe o APK da release e abra no celular. **Esta versão mantém a assinatura da release 2.1.0**, permitindo atualizar essa instalação sem desinstalar. Versões antigas e APKs de teste com outras chaves podem exigir reinstalação: exporte os projetos antes, pois desinstalar apaga o catálogo. A chave privada não é publicada no GitHub. O APK dos testes do GitHub Actions usa outra chave; instale o arquivo da release.
 
 ## Bluetooth: limite importante
 
-O adaptador real envia **um fundo PNG estático** somente depois de o relógio confirmar perfil JieLi, autenticação, capacidades e resolução. Ele não envia GIF animado nem compila um mostrador binário arbitrário. Exportar um GIF não prova que o firmware o aceita. A posição da hora, a data e sensores no relógio continuam sob controle do firmware.
+O adaptador JieLi envia **fundo PNG estático** somente após confirmação do perfil, autenticação, capacidades e resolução. Não envia GIF animado nem compila um mostrador nativo arbitrário. Horas, data e sensores no relógio seguem o firmware.
 
-A compatibilidade física da unidade Watch 8 Ultra do usuário **não foi testada**. Os testes de interface usam eventos marcados TEST ONLY; não substituem um teste no relógio. Não há progresso simulado de envio real.
+**Não houve teste físico no Watch 8 Ultra do usuário nem teste de execução nativa em um celular nesta entrega.** Os testes de interface usam eventos TEST ONLY. Dispositivo conectado ao Android não equivale a compatível para transferência.
 
 ## Desenvolvimento e verificação
 
@@ -41,15 +41,10 @@ npx playwright install chromium
 npm test
 ```
 
-Requer JDK 17+, Android Platform 35 e Build-Tools 35.0.0. Configure `ANDROID_SDK_ROOT` e `JAVA_HOME`. Também é possível abrir no Android Studio com Gradle.
+JDK 17+, Android Platform 35 e Build-Tools 35.0.0; configure ANDROID_SDK_ROOT e JAVA_HOME. Android Studio/Gradle também são suportados pelo projeto. Os relatórios ficam em build/qa. A [execução validada 2.2.0](https://github.com/perabru/WallpaperSmartWatch/actions/runs/40715398114) inclui testes de geometria/GIF, ajustes automáticos, importação/exportação, persistência, interface em larguras de 320 a 1024 px e contrato da ponte nativa. Não são testes de rádio Bluetooth.
 
-Os relatórios e imagens de teste são gerados em `build/qa/`. A suíte verifica geometria, codec GIF, exportações, persistência do catálogo, recorte, layouts de 320 a 1024 px e o contrato da ponte nativa. Leia a execução do CI para o resultado efetivo de cada commit.
+ConnectedDeviceCatalog.java consulta as APIs públicas do Android. device-list.js agrupa e ordena dispositivos sem conceder compatibilidade. smart-fit.js implementa o ajuste local. O Image Lab permanece em studio.html/studio.js/studio-core.js. A integração de transmissão e o editor clássico foram preservados.
 
-### Organização da versão 2.1
+## Licenças e investigação
 
-`studio.html`, `studio.css`, `studio.js` e `studio-core.js` formam o Image Lab. `MainActivity.java` oferece seleção nativa, conversão limitada em memória, salvamento e acesso à integração Bluetooth. `face.js` e o editor anterior permanecem disponíveis em Ajuda → Editor clássico.
-
-
-## Integração Bluetooth e licenças
-
-Consulte [INVESTIGACAO.md](docs/INVESTIGACAO.md) para fontes, hashes e limites do protocolo JieLi; [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) e `licenses/` para licenças. O inventário é arte de fã; marcas e personagens pertencem aos respectivos titulares.
+Consulte [INVESTIGACAO.md](docs/INVESTIGACAO.md), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) e licenses/. O inventário é arte de fã; marcas e personagens pertencem aos respectivos titulares.

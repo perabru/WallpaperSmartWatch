@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['release/v2.1.0.json', '.github/workflows/release-signed.yml']
+    paths: ['release/v2.2.0.json', '.github/workflows/release-signed.yml']
 permissions:
   contents: write
   actions: read
 concurrency:
-  group: raccoon-release-v2.1.0
+  group: raccoon-release-v2.2.0
   cancel-in-progress: false
 jobs:
   release:
@@ -27,15 +27,15 @@ jobs:
       - name: Validar compilacao de origem e obter artefato
         run: |
           python3 - <<'PY'
-          import json, os, re, subprocess
+          import json,os,re,subprocess
           from pathlib import Path
-          r=json.loads(Path('release/v2.1.0.json').read_text())
+          r=json.loads(Path('release/v2.2.0.json').read_text())
           repo=os.environ['GITHUB_REPOSITORY']
           assert repo=='perabru/WallpaperSmartWatch'
           assert type(r['artifactId']) is int and type(r['runId']) is int
           assert re.fullmatch('[a-f0-9]{40}',r['buildCommit'])
           run=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{r["runId"]}']))
-          assert run['conclusion']=='success' and run['head_sha']==r['buildCommit'], 'Source CI must pass'
+          assert run['conclusion']=='success' and run['head_sha']==r['buildCommit'],'Source CI must pass'
           a=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/artifacts/{r["artifactId"]}']))
           assert a['workflow_run']['id']==r['runId'] and not a['expired']
           with open('artifact.zip','wb') as out:
@@ -43,13 +43,13 @@ jobs:
           PY
       - name: Reconstruir APK previamente assinado e verificar
         run: |
-          python3 release/assemble.py release/v2.1.0.json artifact.zip release-output
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs release-output/RaccoonStudio-2.1.0-assinado.apk | tee release-output/assinatura-verificada.txt
-          "$ANDROID_HOME/build-tools/35.0.0/zipalign" -c -P 16 4 release-output/RaccoonStudio-2.1.0-assinado.apk
+          python3 release/assemble.py release/v2.2.0.json artifact.zip release-output
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs release-output/RaccoonStudio-2.2.0-assinado.apk | tee release-output/assinatura-verificada.txt
+          "$ANDROID_HOME/build-tools/35.0.0/zipalign" -c -P 16 4 release-output/RaccoonStudio-2.2.0-assinado.apk
           python3 - <<'PY'
           import json
           from pathlib import Path
-          r=json.loads(Path('release/v2.1.0.json').read_text())
+          r=json.loads(Path('release/v2.2.0.json').read_text())
           s=Path('release-output/assinatura-verificada.txt').read_text()
           assert 'Verified using v2 scheme (APK Signature Scheme v2): true' in s
           assert 'Verified using v3 scheme (APK Signature Scheme v3): true' in s
@@ -57,9 +57,9 @@ jobs:
           PY
       - name: Publicar release e arquivos
         run: |
-          SHA=$(python3 -c "import json;print(json.load(open('release/v2.1.0.json'))['buildCommit'])")
-          if gh release view v2.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload v2.1.0 release-output/* --clobber --repo "$GITHUB_REPOSITORY"
+          SHA=$(python3 -c "import json;print(json.load(open('release/v2.2.0.json'))['buildCommit'])")
+          if gh release view v2.2.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v2.2.0 release-output/* --clobber --repo "$GITHUB_REPOSITORY"
           else
-            gh release create v2.1.0 release-output/* --repo "$GITHUB_REPOSITORY" --target "$SHA" --title 'Raccoon Studio 2.1.0 — Image Lab' --notes-file release/NOTAS-2.1.0.md
+            gh release create v2.2.0 release-output/* --repo "$GITHUB_REPOSITORY" --target "$SHA" --title 'Raccoon Studio 2.2.0 — Conectados e ajuste automático' --notes-file release/NOTAS-2.2.0.md
           fi
