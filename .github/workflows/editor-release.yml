@@ -18,10 +18,10 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
-      - name: Preparar SDK e dependencias fixadas
+      - name: Validar SDK instalado e dependencias fixadas
         run: |
-          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          test -f "$ANDROID_HOME/platforms/android-35/android.jar"
+          test -x "$ANDROID_HOME/build-tools/35.0.0/aapt2"
           python3 tools/fetch-dependencies.py
       - name: Compilar e verificar
         run: |
