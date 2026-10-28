@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070c12">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Raccoon Studio</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div class="brand"><span class="brand-symbol">R<span>•</span></span><div><strong>RACCOON</strong><small>WATCHFACE STUDIO</small></div></div>
+    <button class="connection-chip" id="connectionChip" aria-label="Abrir conexão do relógio"><span class="led"></span><span id="connectionText">SEM RELÓGIO</span></button>
+  </header>
+  <main>
+    <section class="tab-page active" data-page="faces">
+      <div class="eyebrow"><span class="tiny-line"></span> SEU INVENTÁRIO / 01</div>
+      <div class="title-row"><h1>Um clássico.<br><span>No seu pulso.</span></h1><span class="edition">RE<br><b>01</b></span></div>
+      <div class="hero-card">
+        <div class="hero-top"><span class="live-dot"></span> PRÉVIA AO VIVO <span class="hero-top-right" id="heroShape">REDONDO</span></div>
+        <div class="watch-stage"><div class="watch-case" id="watchCase"><canvas id="faceCanvas" width="512" height="512" aria-label="Prévia do mostrador de inventário com horário atual"></canvas></div></div>
+        <div class="hero-bottom"><span><i class="status-square"></i> FINE</span><span>INVENTORY SERIES</span><span>01 / 01</span></div>
+      </div>
+      <div class="face-heading"><div><h2 id="currentFaceName">Raccoon Inventory</h2><p>Azul clássico. Metal. Fósforo verde.</p></div><span class="tag">SEU DESIGN</span></div>
+      <p class="preview-note">Prévia artística com hora do celular. O fundo enviado leva a arte; a hora no relógio usa o mostrador do próprio aparelho.</p>
+      <div class="action-pair"><button class="button primary" id="editFace"><span>Personalizar</span><span>↗</span></button><button class="button secondary" id="exportBackground">Exportar fundo <span>↓</span></button></div>
+      <div class="compatibility-card"><span class="icon-ring">⌁</span><div><strong id="homeConnectionTitle">Leve o design para o relógio</strong><p id="homeConnectionDescription">Conecte o relógio para verificar o envio de fundo personalizado e usar a resolução informada por ele.</p><button class="text-button" id="openDevice">Conectar e enviar <span>→</span></button></div></div>
+      <div class="section-title"><h3>Meu catálogo</h3><button class="text-button" id="saveCurrent">+ Publicar versão</button></div>
+      <p class="section-note">Versões publicadas ficam neste celular. Exporte o projeto para compartilhar.</p>
+      <div id="catalog" class="catalog"></div>
+    </section>
+    <section class="tab-page" data-page="editor">
+      <div class="eyebrow"><span class="tiny-line"></span> OFICINA / DESIGN</div>
+      <h1>Seu próximo<br><span>save point.</span></h1>
+      <div class="editor-preview"><canvas id="editorCanvas" width="512" height="512" aria-label="Prévia do editor"></canvas><div><span class="tag">EDIÇÃO LOCAL</span><h2>Raccoon<br>Inventory</h2><p>Preserve o estilo.<br>Ajuste os detalhes.</p></div></div>
+      <div class="field"><label for="faceName">Nome do mostrador</label><input id="faceName" type="text" value="Raccoon Inventory" maxlength="48"></div>
+      <div class="field"><label>Formato da prévia</label><div class="segmented" id="shapeControl"><button data-shape="round" class="selected">Redondo</button><button data-shape="rounded">Retangular</button></div><small>A foto do seu relógio mostra uma tela redonda. Na transmissão, a resolução vem do aparelho conectado.</small></div>
+      <div class="field"><label for="accentColor">Cor dos indicadores <span id="accentLabel">VERDE CLÁSSICO</span></label><div class="palette"><button class="swatch selected" data-accent="#43ff49" aria-label="Verde clássico"></button><button class="swatch blue" data-accent="#59deff" aria-label="Azul gelo"></button><button class="swatch amber" data-accent="#ffbd4a" aria-label="Âmbar"></button><button class="swatch pink" data-accent="#ff71c6" aria-label="Rosa"></button><input type="color" id="accentColor" value="#43ff49" aria-label="Escolher outra cor"></div></div>
+      <div class="toggle-row"><div><strong>Segundos na prévia</strong><small>Atualiza na prévia a cada segundo.</small></div><input type="checkbox" id="showSeconds" checked aria-label="Mostrar segundos"></div>
+      <div class="field"><label for="timeFormat">Hora na prévia do celular</label><select id="timeFormat"><option value="24">24 horas</option><option value="12">12 horas</option></select></div>
+      <div class="field"><label for="dateLocale">Data na prévia do celular</label><select id="dateLocale"><option value="en">Inglês • WED OCT 28</option><option value="pt">Português • QUA OUT 28</option></select></div>
+      <div class="field"><label>Exportação da imagem</label><div class="dimensions"><div><span>Largura</span><input id="exportWidth" type="number" min="128" max="2048" value="512" inputmode="numeric"></div><span>×</span><div><span>Altura</span><input id="exportHeight" type="number" min="128" max="2048" value="512" inputmode="numeric"></div><span>px</span></div><small>Tamanho do PNG exportado. Para enviar por Bluetooth, o app usa automaticamente a resolução do relógio.</small></div>
+      <div class="button-stack"><button class="button primary" id="saveEditor">Publicar no meu catálogo <span>＋</span></button><button class="button secondary" id="exportProject">Exportar projeto editável <span>↓</span></button><button class="button ghost" id="importProject">Importar projeto <span>↑</span></button></div>
+      <div class="info-note"><strong>Arte + hora do seu relógio</strong><p>O envio direto instala um fundo personalizado. O relógio mantém a hora, a data e a posição dos elementos do seu mostrador de fotos. As opções de hora acima ajustam a prévia; o inventário e a linha “Fine” fazem parte da ilustração.</p></div>
+      <input type="file" id="projectFileInput" accept="application/json,.json" hidden>
+    </section>
+    <section class="tab-page" data-page="device">
+      <div class="eyebrow"><span class="tiny-line"></span> TRANSMISSÃO / BLUETOOTH</div>
+      <h1>Do seu celular.<br><span>Para o seu pulso.</span></h1>
+      <div id="browserNotice" class="info-note hidden"><strong>Abra no aplicativo Android</strong><p>Esta prévia no navegador permite editar e exportar o design. A conexão Bluetooth está disponível no APK Raccoon Studio.</p></div>
+      <div class="device-card"><span class="device-glyph" aria-hidden="true"><svg width="40" height="52" viewBox="0 0 40 52" fill="none"><path d="M12 2h16v8H12zM12 42h16v8H12z" fill="#4c6071"/><rect x="5" y="9" width="30" height="34" rx="8" stroke="#bdcad5" stroke-width="2"/><path d="M35 20h3v9h-3" stroke="#bdcad5" stroke-width="2"/><path d="M12 29h5l3-9 4 13 3-6h3" stroke="#bef66b" stroke-width="2"/></svg></span><div><span class="eyebrow">DISPOSITIVO DESEJADO</span><h2 id="deviceName">Watch 8 Ultra</h2><p id="deviceState">Nenhum relógio conectado.</p></div><span class="device-led" id="deviceLed"></span></div>
+      <div class="action-pair"><button id="scanButton" class="button primary">Buscar relógios <span>⌕</span></button><button id="disconnectButton" class="button secondary" disabled>Desconectar</button></div>
+      <p class="section-note">Deixe o relógio próximo. Desconecte-o temporariamente do MActive Pro antes de conectar aqui. Selecione o dispositivo do relógio, não o canal de áudio das chamadas.</p>
+      <div id="scanStatus" class="scan-status" role="status"></div>
+      <div id="deviceList" class="device-list"></div>
+      <div class="transfer-card" id="transferCard">
+        <div class="section-title"><h3>Enviar fundo atual</h3><span class="tag amber-tag" id="transferBadge">CONECTE</span></div>
+        <div class="send-preview"><canvas id="sendCanvas" width="192" height="192" aria-label="Imagem de fundo que será enviada, sem hora desenhada"></canvas><div><strong id="sendFaceName">Raccoon Inventory</strong><span id="sendDimensions">Resolução automática</span><small>A hora é exibida pelo relógio.</small></div></div>
+        <p id="transferExplanation" role="status">Conecte o relógio. O envio será liberado quando o aparelho confirmar suporte a fundo personalizado.</p>
+        <div id="transferProgress" class="transfer-progress hidden"><div class="progress-label"><span id="transferStage">Preparando</span><span id="transferPercent">—</span></div><progress id="transferBar" max="100" aria-label="Progresso do envio"></progress></div>
+        <button class="button primary" id="sendFace" aria-disabled="true" disabled>Conecte um relógio compatível <span>↗</span></button>
+        <button class="button ghost hidden" id="cancelTransfer">Cancelar envio</button>
+        <small>Selecione no relógio um mostrador que aceite foto personalizada. O estilo e a posição da hora dependem desse mostrador. Durante o envio, mantenha o app aberto e o relógio por perto.</small>
+      </div>
+      <div class="section-title"><h3>Identificação do relógio</h3><span class="tag" id="profileBadge">AGUARDANDO</span></div>
+      <dl id="deviceDetails" class="detail-list"><div><dt>Modelo</dt><dd>Aguardando leitura</dd></div><div><dt>Firmware</dt><dd>Aguardando leitura</dd></div><div><dt>Serviços Bluetooth</dt><dd>—</dd></div></dl>
+      <div class="field"><label for="manualModel">Modelo na tela “Sobre”</label><input type="text" id="manualModel" maxlength="80" value="Watch 8 Ultra" placeholder="Como aparece no relógio"></div>
+      <div class="field"><label for="manualFirmware">Firmware na tela “Sobre”</label><input type="text" id="manualFirmware" maxlength="100" placeholder="Opcional: copie a versão aqui"></div>
+      <div class="button-stack"><button class="button secondary" id="exportReport">Salvar diagnóstico Bluetooth <span>↓</span></button></div>
+      <details class="diagnostic-help"><summary>Quando o envio não for liberado</summary><p>Salve o diagnóstico acima e compartilhe o arquivo para identificar a variante do relógio. O relatório informa os serviços Bluetooth, o identificador do aparelho e as respostas de compatibilidade. O aplicativo não o envia automaticamente.</p></details>
+      <p class="app-version">Raccoon Studio 2.0 · editor e transmissão local</p><button class="licenses-button" id="showLicenses">Licenças e créditos</button>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="Navegação principal"><button class="active" data-tab="faces"><span>▦</span>Mostradores</button><button data-tab="editor"><span>✎</span>Editor</button><button data-tab="device"><span>⌁</span>Relógio</button></nav>
+  <div class="toast" id="toast" role="status"></div>
+  <dialog id="confirmDialog"><h3 id="dialogTitle"></h3><p id="dialogMessage"></p><div class="action-pair"><button class="button secondary" id="dialogCancel">Cancelar</button><button class="button primary" id="dialogConfirm">Confirmar</button></div></dialog>
+</div>
+<script src="face.js"></script><script src="app.js"></script>
+</body>
+</html>

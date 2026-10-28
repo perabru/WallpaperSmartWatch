@@ -1,0 +1,23 @@
+{
+  "format": "raccoon-studio/project",
+  "schemaVersion": 1,
+  "createdAt": "2026-10-28T11:48:25.396151+00:00",
+  "name": "Raccoon Inventory",
+  "config": {
+    "name": "Raccoon Inventory",
+    "shape": "round",
+    "accent": "#43ff49",
+    "showSeconds": true,
+    "timeFormat": "24",
+    "dateLocale": "en",
+    "width": 512,
+    "height": 512
+  },
+  "compatibility": {
+    "targetLabel": "Watch 8 Ultra / MActive Pro",
+    "status": "checked_on_connection",
+    "transferMode": "custom_background",
+    "watchfaceBinary": false
+  },
+  "note": "Projeto editável. O envio Bluetooth usa o fundo; hora e data são desenhadas pelo mostrador do relógio."
+}

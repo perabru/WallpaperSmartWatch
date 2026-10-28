@@ -1,0 +1,14 @@
+.gradle/
+.idea/
+local.properties
+build/
+app/build/
+*.jks
+*.keystore
+*.apk
+*.idsig
+
+node_modules/
+app/libs/*.aar
+app/libs/*.jar
+!downloads/*.apk

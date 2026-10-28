@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-28T11:48:38.630Z",
+  "status": "passed",
+  "checks": [
+    "rendering and canvas export on local HTTPS origin",
+    "round and rectangular backgrounds generated",
+    "editor fields and bounded dimensions",
+    "catalog local persistence",
+    "project JSON export and validation",
+    "untrusted labels rendered as text",
+    "PNG download",
+    "responsive layouts 320–1024 px",
+    "native bridge event contract with TEST ONLY inputs",
+    "diagnostic export and unsupported-device gate",
+    "device-reported dimensions used in transfer PNG",
+    "busy double-send prevention and cancellation",
+    "100 percent bytes does not imply activation success",
+    "disconnect invalidates transfer readiness"
+  ],
+  "pageErrors": [],
+  "hardwareBluetoothTested": false,
+  "androidRuntimeTested": false
+}

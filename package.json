@@ -1,0 +1,12 @@
+{
+  "name": "wallpaper-smartwatch",
+  "version": "2.0.0",
+  "private": true,
+  "description": "UI verification for Raccoon Studio Android watchface editor",
+  "scripts": {
+    "test": "node tools/verify-ui.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

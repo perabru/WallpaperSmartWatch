@@ -1,0 +1,4 @@
+# Dependências obtidas de fontes oficiais e validadas pelo lock.
+*.aar
+*.jar
+.download-*

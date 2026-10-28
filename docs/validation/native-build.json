@@ -1,0 +1,320 @@
+{
+  "applicationId": "br.com.perabru.raccoonstudio",
+  "versionCode": 2,
+  "versionName": "2.0.0",
+  "minSdk": 26,
+  "targetSdk": 35,
+  "apk": "RaccoonStudio-debug.apk",
+  "bytes": 5856029,
+  "sha256": "1edcb5661ee7dd3a261110d4dc3240abd683521463bb2483c3f158ad6a892823",
+  "hardwareTested": false,
+  "assets": {
+    "app.js": {
+      "bytes": 21024,
+      "sha256": "45321923c16a759a1740f45404afbfa108c3ec92d6e303ea98c27820e74de536"
+    },
+    "face.js": {
+      "bytes": 10371,
+      "sha256": "12373f2d42000290e8c4aed7b82ade2b003eb2c80c61e8d5e72b97f6944d816f"
+    },
+    "index.html": {
+      "bytes": 11441,
+      "sha256": "99b4a2cdad61f0badd970cf6db1e633aee2211edea35e6e8ef4facc1d0d02142"
+    },
+    "jill-portrait.png": {
+      "bytes": 1285872,
+      "sha256": "a5de035afabd423b16dccb248497b4b71eff54e9d2895c9bc745c34300ca1668"
+    },
+    "styles.css": {
+      "bytes": 14222,
+      "sha256": "7b53dfa03c1ebe75ce6260862263d21cc847248f2979e8f573bfa99335b670b4"
+    },
+    "third-party.txt": {
+      "bytes": 38787,
+      "sha256": "ee44272d167c378bf99f7481f273cc7d537ab502fbcca1eb32bb3df991f9f902"
+    }
+  },
+  "nativeLibraries": [
+    {
+      "path": "lib/arm64-v8a/libjl_bmp_convert.so",
+      "bytes": 379360,
+      "sha256": "70c859271d153093b379356102ae32257f5ea36558b9775756660db21958a5f4",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 1785856
+    },
+    {
+      "path": "lib/arm64-v8a/libjl_fatfs.so",
+      "bytes": 346336,
+      "sha256": "21282db64cc82684116a9ff14b9df30f03c97bb842786469200c3717ebf13f95",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 2179072
+    },
+    {
+      "path": "lib/arm64-v8a/libjl_pack_format.so",
+      "bytes": 282064,
+      "sha256": "371b74d5f0f522f49e6555cb579dcd56f72a7fabe623b9b0632e514cca0044c5",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 2539520
+    },
+    {
+      "path": "lib/arm64-v8a/libjl_crc.so",
+      "bytes": 5424,
+      "sha256": "1446f801218a551efba0edd04dda23bef4128dfb0f77dd1bc5c114f9252f2578",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 2834432
+    },
+    {
+      "path": "lib/arm64-v8a/libjl_auth.so",
+      "bytes": 11528,
+      "sha256": "0b9ccabb9fade9e3a4e95c15490a1699bdb5d521f4ec1aad0a35d0efafcb58a4",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 2850816
+    },
+    {
+      "path": "lib/x86/libjl_bmp_convert.so",
+      "bytes": 495528,
+      "sha256": "2736127c7ca1995760721ca3963d2926f1d31d056bcf8e32e14bd200fb415d99",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 2867200
+    },
+    {
+      "path": "lib/x86/libjl_fatfs.so",
+      "bytes": 297320,
+      "sha256": "dc229ff9404684112e4dfe19c186ecd9917738638bf7a1c78972bb0267d0cb3d",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 3375104
+    },
+    {
+      "path": "lib/x86/libjl_pack_format.so",
+      "bytes": 235100,
+      "sha256": "f17a7d33ad68f80672c845c5d58d2135289b165167c24a9db9a37bec16fee962",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 3686400
+    },
+    {
+      "path": "lib/x86/libjl_crc.so",
+      "bytes": 4196,
+      "sha256": "b9423ebea7a2d6f5b48b435efb2fca5dd8c56e3594b7c7144591d336a794444f",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 3932160
+    },
+    {
+      "path": "lib/x86/libjl_auth.so",
+      "bytes": 10012,
+      "sha256": "27ea583feb9966f800dc706eafd5d392293a706ed443cb79e73efff44878569c",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 3948544
+    },
+    {
+      "path": "lib/x86_64/libjl_bmp_convert.so",
+      "bytes": 448640,
+      "sha256": "43a15e7197042b95348a0edb714fc5fad57e9c4f0163af086ef451261d775fbe",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 3964928
+    },
+    {
+      "path": "lib/x86_64/libjl_fatfs.so",
+      "bytes": 340680,
+      "sha256": "20fe8c0717cec03e18ff7d4e06acd4a34872adc4deea2e96a139a72a25ae9719",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 4423680
+    },
+    {
+      "path": "lib/x86_64/libjl_pack_format.so",
+      "bytes": 277224,
+      "sha256": "d202143d5c8fffd640d68e0358b1c8d058e0c5eb0c4e7bc02128d43244d1e10a",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 4767744
+    },
+    {
+      "path": "lib/x86_64/libjl_crc.so",
+      "bytes": 5368,
+      "sha256": "d8cffd17a5c21637500d7c3390a608ff116bbc44261f20db42fac8a7b63412cb",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5046272
+    },
+    {
+      "path": "lib/x86_64/libjl_auth.so",
+      "bytes": 11240,
+      "sha256": "6669dc4712d017ab5b5f155db59508780e14768b0e144c75078a0158a1d22694",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5062656
+    },
+    {
+      "path": "lib/armeabi-v7a/libjl_bmp_convert.so",
+      "bytes": 342996,
+      "sha256": "8cd3b9dc44f86b37ae6aa7ae226d0ae3f87404297715f1ebe4370dddbe0d4236",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5079040
+    },
+    {
+      "path": "lib/armeabi-v7a/libjl_fatfs.so",
+      "bytes": 208044,
+      "sha256": "266c0fc8c5b965cca37e2dc87722294354e938a29522629275b2b85938e64462",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5423104
+    },
+    {
+      "path": "lib/armeabi-v7a/libjl_pack_format.so",
+      "bytes": 166640,
+      "sha256": "4272d386f39a021d7d673a08326d2f7998247aa61b9bade860139f40ade230eb",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5636096
+    },
+    {
+      "path": "lib/armeabi-v7a/libjl_crc.so",
+      "bytes": 3908,
+      "sha256": "7fe81e2edd52e2a32579759687960a1cfe2b68bdc19524cdead9ec9770ae183b",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5816320
+    },
+    {
+      "path": "lib/armeabi-v7a/libjl_auth.so",
+      "bytes": 8420,
+      "sha256": "1aa81004e0920f91bfb7936949937b3714f24faa8381269aceed4ab38d88314a",
+      "elfLoadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "apkOffset": 5832704
+    }
+  ],
+  "verifiedAtUtc": "2026-10-28T11:47:28.732410+00:00",
+  "signingV2V3Verified": true,
+  "zipAndElf16KiBAlignmentVerified": true,
+  "dependencies": [
+    {
+      "name": "Jieli Watch SDK",
+      "version": "1.14.0_11307",
+      "filename": "JL_Watch_V1.14.0_11307-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/JL_Watch_V1.14.0_11307-release.aar",
+      "bytes": 1205463,
+      "sha256": "a078fbcfea95ddb8ba2d02afc1c3c7f6ef5d118e7e773ad79f0eb3a7985e8867",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Jieli RCSP SDK",
+      "version": "0.8.0_705",
+      "filename": "jl_rcsp_V0.8.0_705-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/jl_rcsp_V0.8.0_705-release.aar",
+      "bytes": 664211,
+      "sha256": "e894cc55b68e319ba8b0a1218d2087b81b3ddc09f6ac62751385352d99e7c84c",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Jieli BmpConvert",
+      "version": "1.6.0_10605",
+      "filename": "BmpConvert_V1.6.0_10605-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/BmpConvert_V1.6.0_10605-release.aar",
+      "bytes": 621482,
+      "sha256": "7f6d27aa8bb31e2bacafdd8eaecc7d460394c305438fc33428abb49fedc40ee4",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Gson",
+      "version": "2.13.1",
+      "filename": "gson-2.13.1.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar",
+      "bytes": 286972,
+      "sha256": "94855942d4992f112946d3de1c334e709237b8126d8130bf07807c018a4a2120",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Gson-Apache-2.0.txt"
+    },
+    {
+      "name": "Error Prone annotations",
+      "version": "2.38.0",
+      "filename": "error_prone_annotations-2.38.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0.jar",
+      "bytes": 20389,
+      "sha256": "6661d5335090a5fc61dd869d2095bc6c1e2156e3aa47a6e4ababdf64c99a7889",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Error-Prone-Apache-2.0.txt"
+    }
+  ],
+  "sources": {
+    "app/src/main/java/br/com/perabru/raccoonstudio/BleController.java": "cbe2d3d56f912431f491ed01d79f6054196bd471a76ea212134a4a06ecf3489f",
+    "app/src/main/java/br/com/perabru/raccoonstudio/JieliSession.java": "23b9625473d519faf838c5ceffbce0b129ce96319de963c1bf720d55a372cbca",
+    "app/src/main/java/br/com/perabru/raccoonstudio/JieliWatchfaceService.java": "16db2d55f75c320b190d0f81721c3a076c6dfd00143e93c90503e49f687aa846",
+    "app/src/main/java/br/com/perabru/raccoonstudio/MainActivity.java": "5376b3664c76bfa2b6754c08026194737bf1435000dfcaf8f93252de00984992"
+  }
+}

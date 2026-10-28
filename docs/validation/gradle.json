@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "command": "./gradlew --no-daemon :app:assembleDebug",
+  "gradle": "8.9",
+  "androidGradlePlugin": "8.7.3",
+  "jdk": 17,
+  "compileSdk": 35,
+  "buildTools": "35.0.0",
+  "permissionParityWithPublishedApk": true,
+  "permissions": [
+    "uses-permission: name='android.permission.ACCESS_FINE_LOCATION' maxSdkVersion='30'",
+    "uses-permission: name='android.permission.BLUETOOTH' maxSdkVersion='30'",
+    "uses-permission: name='android.permission.BLUETOOTH_ADMIN' maxSdkVersion='30'",
+    "uses-permission: name='android.permission.BLUETOOTH_CONNECT'",
+    "uses-permission: name='android.permission.BLUETOOTH_SCAN' usesPermissionFlags='neverForLocation'"
+  ],
+  "androidRuntimeTested": false,
+  "hardwareBluetoothTested": false
+}

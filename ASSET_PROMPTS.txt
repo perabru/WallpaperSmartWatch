@@ -1,0 +1,20 @@
+ASSET: app/src/main/assets/jill-portrait.png
+
+PROVENANCE
+Generated on 2026-10-28 with the built-in image_gen tool.
+Reference: watchface inspiration photo supplied privately by the repository owner. The photo is not distributed in this repository.
+Role of reference: visual guidance for the small Jill inventory portrait only.
+Generation output retained as app/src/main/assets/jill-portrait.png.
+Copied byte-for-byte into the Android project; no programmatic redraw or postprocessing.
+Original fan-art portrait generated for the requested Resident Evil-inspired watchface.
+The character Jill Valentine belongs to its respective rights holders; this asset is not an official licensed game resource.
+Opaque square portrait, no text, no UI, no border.
+
+PROMPT
+Use case: stylized-concept.
+Asset type: one square portrait sprite for a tiny smartwatch game-inventory interface.
+Input image: the attached watch photograph is a visual reference ONLY for the small Jill portrait in its lower-left panel. Produce a NEW standalone asset of that portrait, not a watch or interface.
+Primary request: a single head-and-shoulders portrait of Jill Valentine from the late-1990s survival-horror game era. Short chestnut/auburn bob haircut parted near the center, youthful adult woman, serious calm expression, eyes looking forward, blue tank top. Match the small reference portrait's period styling.
+Style: authentic low-resolution PS1 pre-rendered inventory portrait translated into carefully controlled pixel art, visibly pixelated edges and restrained dithering, simple blocky color clusters, modest low-poly facial shading, not modern anime, not photorealism, not painterly concept art.
+Composition: exact square 1:1 canvas. One centered face fills most of the square; show full hair, neck and only the tops of shoulders. Face forward with the same subtle three-quarter suggestion as reference. Simple solid electric cobalt blue background. The whole square is the portrait with no surrounding margin.
+Constraints: no watch, no wrist, no UI, no inventory, no text, no letters, no border, no logo, no gun, no other objects. Crisp readable face at very small size. Opaque background.

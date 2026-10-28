@@ -1,0 +1,56 @@
+name: Android e interface
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Android SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Dependências com hash verificado
+        run: python3 tools/fetch-dependencies.py
+      - name: Compilar APK
+        run: bash build.sh
+      - name: Validar caminho Android Studio / Gradle
+        run: ./gradlew --no-daemon :app:assembleDebug
+      - name: Verificar políticas de conversão e arquivos
+        run: bash tools/test-policies.sh
+      - name: Preparar verificação da interface
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Verificar editor e estados de transmissão
+        run: npm test
+        env:
+          RACCOON_OUTPUT: build/examples
+      - name: Publicar artefatos de verificação
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: RaccoonStudio-debug-e-verificacao
+          path: |
+            build/RaccoonStudio-debug.apk
+            build/qa/
+            build/native/build-verification.json
+            build/examples/
+          if-no-files-found: error
+          retention-days: 14

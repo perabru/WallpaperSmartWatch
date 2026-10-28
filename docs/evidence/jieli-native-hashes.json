@@ -1,0 +1,52 @@
+[
+  {
+    "library": "libjl_bmp_convert.so",
+    "abi": "arm64-v8a",
+    "aar": "BmpConvert_V1.6.0_10605-release.aar",
+    "apk_bytes": 379360,
+    "sdk_bytes": 379360,
+    "apk_sha256": "70c859271d153093b379356102ae32257f5ea36558b9775756660db21958a5f4",
+    "sdk_sha256": "70c859271d153093b379356102ae32257f5ea36558b9775756660db21958a5f4",
+    "identical": true
+  },
+  {
+    "library": "libjl_fatfs.so",
+    "abi": "arm64-v8a",
+    "aar": "JL_Watch_V1.14.0_11307-release.aar",
+    "apk_bytes": 346368,
+    "sdk_bytes": 346336,
+    "apk_sha256": "5d53b4031a940be2f672742c8889288fcc38892722355294f430b988c068bd00",
+    "sdk_sha256": "21282db64cc82684116a9ff14b9df30f03c97bb842786469200c3717ebf13f95",
+    "identical": false
+  },
+  {
+    "library": "libjl_pack_format.so",
+    "abi": "arm64-v8a",
+    "aar": "JL_Watch_V1.14.0_11307-release.aar",
+    "apk_bytes": 282064,
+    "sdk_bytes": 282064,
+    "apk_sha256": "4b0ae0a67d9b510676310a832959871322ffe5e89bcfa9fd8bad2e5cfdb3f3e3",
+    "sdk_sha256": "371b74d5f0f522f49e6555cb579dcd56f72a7fabe623b9b0632e514cca0044c5",
+    "identical": false
+  },
+  {
+    "library": "libjl_auth.so",
+    "abi": "arm64-v8a",
+    "aar": "jl_rcsp_V0.8.0_705-release.aar",
+    "apk_bytes": 11528,
+    "sdk_bytes": 11528,
+    "apk_sha256": "7225176aed270de3bc5e4e4b0eb3f36ab7e8b342bda2157b9b484d23d315054a",
+    "sdk_sha256": "0b9ccabb9fade9e3a4e95c15490a1699bdb5d521f4ec1aad0a35d0efafcb58a4",
+    "identical": false
+  },
+  {
+    "library": "libjl_crc.so",
+    "abi": "arm64-v8a",
+    "aar": "jl_rcsp_V0.8.0_705-release.aar",
+    "apk_bytes": 5424,
+    "sdk_bytes": 5424,
+    "apk_sha256": "593ba761757c6c818424c0d9268223287b188eef1f096ad26cd09849e82a1ffa",
+    "sdk_sha256": "1446f801218a551efba0edd04dda23bef4128dfb0f77dd1bc5c114f9252f2578",
+    "identical": false
+  }
+]

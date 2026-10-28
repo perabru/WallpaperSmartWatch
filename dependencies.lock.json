@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "jieliCommit": "ba19b04e286dd116a4e8bae1779878404c1dad04",
+  "dependencies": [
+    {
+      "name": "Jieli Watch SDK",
+      "version": "1.14.0_11307",
+      "filename": "JL_Watch_V1.14.0_11307-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/JL_Watch_V1.14.0_11307-release.aar",
+      "bytes": 1205463,
+      "sha256": "a078fbcfea95ddb8ba2d02afc1c3c7f6ef5d118e7e773ad79f0eb3a7985e8867",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Jieli RCSP SDK",
+      "version": "0.8.0_705",
+      "filename": "jl_rcsp_V0.8.0_705-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/jl_rcsp_V0.8.0_705-release.aar",
+      "bytes": 664211,
+      "sha256": "e894cc55b68e319ba8b0a1218d2087b81b3ddc09f6ac62751385352d99e7c84c",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Jieli BmpConvert",
+      "version": "1.6.0_10605",
+      "filename": "BmpConvert_V1.6.0_10605-release.aar",
+      "url": "https://raw.githubusercontent.com/Jieli-Tech/Android-JL_Health/ba19b04e286dd116a4e8bae1779878404c1dad04/libs/JL/BmpConvert_V1.6.0_10605-release.aar",
+      "bytes": 621482,
+      "sha256": "7f6d27aa8bb31e2bacafdd8eaecc7d460394c305438fc33428abb49fedc40ee4",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Jieli-Apache-2.0.txt"
+    },
+    {
+      "name": "Gson",
+      "version": "2.13.1",
+      "filename": "gson-2.13.1.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar",
+      "bytes": 286972,
+      "sha256": "94855942d4992f112946d3de1c334e709237b8126d8130bf07807c018a4a2120",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Gson-Apache-2.0.txt"
+    },
+    {
+      "name": "Error Prone annotations",
+      "version": "2.38.0",
+      "filename": "error_prone_annotations-2.38.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.38.0/error_prone_annotations-2.38.0.jar",
+      "bytes": 20389,
+      "sha256": "6661d5335090a5fc61dd869d2095bc6c1e2156e3aa47a6e4ababdf64c99a7889",
+      "license": "Apache-2.0",
+      "licenseFile": "licenses/Error-Prone-Apache-2.0.txt"
+    }
+  ]
+}
