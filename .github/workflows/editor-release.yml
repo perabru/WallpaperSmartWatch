@@ -1,0 +1,43 @@
+name: Editor - pacote de compilacao
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/editor-release.yml']
+permissions:
+  contents: read
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Preparar SDK e dependencias fixadas
+        run: |
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          python3 tools/fetch-dependencies.py
+      - name: Compilar e verificar
+        run: |
+          bash build.sh
+          bash tools/test-policies.sh
+      - name: Preparar fonte e ferramentas para assinatura local
+        run: |
+          mkdir -p /tmp/editor-bundle/source /tmp/editor-bundle/android-sdk/build-tools /tmp/editor-bundle/android-sdk/platforms
+          tar --exclude='./.git' --exclude='./build' --exclude='./downloads' --exclude='./node_modules' --exclude='./.gradle' -cf - . | tar -xf - -C /tmp/editor-bundle/source
+          cp -a "$ANDROID_HOME/build-tools/35.0.0" /tmp/editor-bundle/android-sdk/build-tools/
+          cp -a "$ANDROID_HOME/platforms/android-35" /tmp/editor-bundle/android-sdk/platforms/
+          cp build/RaccoonStudio-debug.apk /tmp/editor-bundle/
+          cp build/native/build-verification.json /tmp/editor-bundle/
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: editor-build-source
+          path: /tmp/editor-bundle/
+          include-hidden-files: true
+          retention-days: 3
+          if-no-files-found: error
