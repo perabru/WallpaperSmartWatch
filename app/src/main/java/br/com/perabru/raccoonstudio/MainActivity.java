@@ -49,6 +49,8 @@ public final class MainActivity extends Activity {
     private static final String ASSET_ORIGIN="https://appassets.androidplatform.net";
     private WebView web;
     private BleController ble;
+    private ConnectedDeviceCatalog deviceCatalog;
+    private static final int CATALOG_PERMISSION=15, ENABLE_CATALOG=16;
     private boolean pageReady, destroyed, pendingScan, transferBusy;
     private byte[] pendingFile;
     private String pendingFileName;
@@ -90,6 +92,7 @@ public final class MainActivity extends Activity {
             }
         });
         ble = new BleController(this, this::emit);
+        deviceCatalog = new ConnectedDeviceCatalog(this, this::emit);
         web.addJavascriptInterface(new Bridge(), "Android");
         web.setWebViewClient(new WebViewClient() {
             @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -104,7 +107,7 @@ public final class MainActivity extends Activity {
                     String path=uri.getPath();
                     if(path!=null&&path.startsWith("/assets/")){
                         String name=path.substring(8);
-                        if(name.equals("index.html")||name.equals("styles.css")||name.equals("face.js")||name.equals("app.js")||name.equals("jill-portrait.png")||name.equals("studio.html")||name.equals("studio.css")||name.equals("studio.js")||name.equals("studio-core.js")){
+                        if(name.equals("index.html")||name.equals("styles.css")||name.equals("face.js")||name.equals("app.js")||name.equals("jill-portrait.png")||name.equals("studio.html")||name.equals("studio.css")||name.equals("studio.js")||name.equals("smart-fit.js")||name.equals("device-list.js")||name.equals("studio-core.js")){
                             String mime=name.endsWith(".html")?"text/html":name.endsWith(".css")?"text/css":name.endsWith(".js")?"application/javascript":"image/png";
                             try{return new WebResourceResponse(mime,"UTF-8",getAssets().open(name));}catch(java.io.IOException ignored){}
                         }
@@ -117,13 +120,14 @@ public final class MainActivity extends Activity {
                 pageReady=true;
                 emit("nativeReady", nativeInfo());
                 emit("report", ble.getReport());
+                if(deviceCatalog.hasPermission())deviceCatalog.refresh();
             }
         });
         web.loadUrl(APP_URL);
     }
 
     private JSONObject nativeInfo() {
-        return object("appVersion","2.1.0","androidVersion",Build.VERSION.RELEASE,
+        return object("appVersion","2.2.0","connectedDeviceCatalog",true,"androidVersion",Build.VERSION.RELEASE,
             "androidSdk",Build.VERSION.SDK_INT,"phoneManufacturer",Build.MANUFACTURER,
             "phoneModel",Build.MODEL,"nativeBluetooth",true,"customBackgroundSupported",true,
             "transport","jieli_rcsp","transferEnabled",false,"capabilityCheckRequired",true);
@@ -143,6 +147,25 @@ public final class MainActivity extends Activity {
             web.evaluateJavascript("window.onNativeEvent&&window.onNativeEvent("+
                 JSONObject.quote(type)+","+data.toString()+");",null);
         });
+    }
+
+    private void refreshKnownDevices(boolean prompt) {
+        if(destroyed || deviceCatalog==null)return;
+        if(!deviceCatalog.hasPermission()){
+            if(prompt)requestPermissions(new String[]{Manifest.permission.BLUETOOTH_CONNECT},CATALOG_PERMISSION);
+            else deviceCatalog.refresh();
+            return;
+        }
+        BluetoothManager manager=(BluetoothManager)getSystemService(BLUETOOTH_SERVICE);
+        BluetoothAdapter adapter=manager==null?null:manager.getAdapter();
+        try {
+            if(prompt && adapter!=null && !adapter.isEnabled()) {
+                startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),ENABLE_CATALOG);return;
+            }
+            deviceCatalog.refresh();
+        } catch(RuntimeException e) {
+            emit("knownDevices",object("state","unavailable","message","Não foi possível consultar o Bluetooth. Confira as permissões.","devices",new org.json.JSONArray()));
+        }
     }
 
     private void startScanWithPermissions() {
@@ -172,6 +195,7 @@ public final class MainActivity extends Activity {
 
     @Override public void onRequestPermissionsResult(int code,String[] permissions,int[] grants){
         super.onRequestPermissionsResult(code,permissions,grants);
+        if(code==CATALOG_PERMISSION){refreshKnownDevices(false);return;}
         if(code!=PERMISSIONS)return;
         boolean allowed=grants.length>0;for(int value:grants)allowed&=value==PackageManager.PERMISSION_GRANTED;
         if(allowed&&pendingScan)startScanWithPermissions();
@@ -180,11 +204,13 @@ public final class MainActivity extends Activity {
 
     private final class Bridge {
         @JavascriptInterface public String getNativeInfo(){return nativeInfo().toString();}
+        @JavascriptInterface public void refreshKnownDevices(){runOnUiThread(()->MainActivity.this.refreshKnownDevices(true));}
+        @JavascriptInterface public String getKnownDevices(){return deviceCatalog.getSnapshot().toString();}
         @JavascriptInterface public void startScan(){runOnUiThread(MainActivity.this::startScanWithPermissions);}
         @JavascriptInterface public void stopScan(){ble.stopScan();}
-        @JavascriptInterface public void connect(String address){if(address!=null&&address.length()<32)ble.connect(address);}
+        @JavascriptInterface public void connect(String address){if(address!=null&&address.length()<32){deviceCatalog.remember(address);ble.connect(address);}}
         @JavascriptInterface public void disconnect(){ble.disconnect();}
-        @JavascriptInterface public String getReport(){return ble.getReport().toString();}
+        @JavascriptInterface public String getReport(){JSONObject report=ble.getReport();try{report.put("knownDevices",deviceCatalog.getSnapshot());}catch(JSONException ignored){}return report.toString();}
         @JavascriptInterface public void installBackground(String pngDataUrl){
             if(pngDataUrl==null||pngDataUrl.length()>12_000_000||!pngDataUrl.startsWith("data:image/png;base64,")){
                 emit("transfer",object("state","error","message","Selecione uma imagem PNG válida de até 8 MB."));return;
@@ -230,6 +256,7 @@ public final class MainActivity extends Activity {
 
     @Override protected void onActivityResult(int request,int result,Intent data){
         super.onActivityResult(request,result,data);
+        if(request==ENABLE_CATALOG){refreshKnownDevices(false);return;}
         if(request==ENABLE_BT){if(result==RESULT_OK&&pendingScan)startScanWithPermissions();else{pendingScan=false;emit("error",object("code","bluetooth_disabled","message","Ative o Bluetooth para procurar o relógio."));}return;}
         if(request==SAVE_FILE){
             byte[] bytes=pendingFile;String filename=pendingFileName;pendingFile=null;pendingFileName=null;
@@ -304,8 +331,8 @@ public final class MainActivity extends Activity {
 
     private static JSONObject object(Object... values){JSONObject result=new JSONObject();try{for(int i=0;i<values.length;i+=2)result.put((String)values[i],values[i+1]);}catch(JSONException ignored){}return result;}
     @Override protected void onPause(){super.onPause();if(ble!=null)ble.stopScan();if(web!=null)web.onPause();}
-    @Override protected void onResume(){super.onResume();if(web!=null)web.onResume();}
-    @Override protected void onDestroy(){destroyed=true;pageReady=false;if(ble!=null)ble.close();if(web!=null){web.removeJavascriptInterface("Android");web.destroy();web=null;}pendingFile=null;super.onDestroy();}
+    @Override protected void onResume(){super.onResume();if(web!=null)web.onResume();if(deviceCatalog!=null&&deviceCatalog.hasPermission())refreshKnownDevices(false);}
+    @Override protected void onDestroy(){destroyed=true;pageReady=false;if(deviceCatalog!=null)deviceCatalog.close();if(ble!=null)ble.close();if(web!=null){web.removeJavascriptInterface("Android");web.destroy();web=null;}pendingFile=null;super.onDestroy();}
     @Override public void onBackPressed(){
         if(web==null){super.onBackPressed();return;}
         if(transferBusy){

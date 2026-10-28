@@ -319,6 +319,7 @@ public final class BleController {
         selectedAddress = address.toUpperCase(Locale.US);
         ScanEntry scanned = devices.get(selectedAddress);
         selectedName = scanned == null ? "Relógio BLE" : scanned.name;
+        if(scanned==null)try{String knownName=adapter.getRemoteDevice(selectedAddress).getName();if(knownName!=null&&!knownName.trim().isEmpty())selectedName=knownName;}catch(RuntimeException ignored){}
         selectedAdvertisement = scanned == null ? null : scanned.advertisement();
         services = new JSONArray();
         reads = new JSONArray();

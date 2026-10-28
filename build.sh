@@ -14,8 +14,8 @@ java_dir="${JAVA_HOME:-/usr/lib/jvm/java-17-openjdk-amd64}"
 work_dir="$project_dir/build/native"
 output_apk="$project_dir/build/RaccoonStudio-debug.apk"
 signing_dir="${RACCOON_SIGNING_DIR:-$project_dir/../toolchain/signing}"
-version_code="${RACCOON_VERSION_CODE:-21}"
-version_name="${RACCOON_VERSION_NAME:-2.1.0}"
+version_code="${RACCOON_VERSION_CODE:-22}"
+version_name="${RACCOON_VERSION_NAME:-2.2.0}"
 
 if [[ -x "$java_dir/bin/javac" ]]; then
   java_compiler="$java_dir/bin/javac"

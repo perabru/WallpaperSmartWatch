@@ -4,11 +4,11 @@ const fs=require('fs'),path=require('path'),assert=require('assert');
 const ROOT=path.resolve(__dirname,'..'),ASSETS=path.join(ROOT,'app/src/main/assets');
 const OUT=process.env.RACCOON_OUTPUT||path.join(ROOT,'build/examples');
 const QA=path.join(ROOT,'build/qa');fs.mkdirSync(QA,{recursive:true});fs.mkdirSync(OUT,{recursive:true});
-const BASE='https://appassets.androidplatform.net/assets/';
+const BASE=process.env.RACCOON_TEST_BASE||'https://appassets.androidplatform.net/assets/';
 (async()=>{
-  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE||undefined,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
   const ctx=await browser.newContext({viewport:{width:402,height:874},deviceScaleFactor:2,acceptDownloads:true});
-  await ctx.route('**/*',async route=>{const url=new URL(route.request().url());const name=url.pathname.replace(/^\/assets\//,'');if(url.hostname!=='appassets.androidplatform.net'||!['index.html','styles.css','face.js','app.js','jill-portrait.png'].includes(name)){return route.abort();}const ext=path.extname(name),types={'.html':'text/html','.css':'text/css','.js':'application/javascript','.png':'image/png'};await route.fulfill({status:200,contentType:types[ext],body:fs.readFileSync(path.join(ASSETS,name))});});
+  await ctx.route('**/*',async route=>{const url=new URL(route.request().url());const name=url.pathname.replace(/^\/assets\//,'');if(url.origin!==new URL(BASE).origin||!['index.html','styles.css','face.js','app.js','jill-portrait.png'].includes(name)){return route.abort();}const ext=path.extname(name),types={'.html':'text/html','.css':'text/css','.js':'application/javascript','.png':'image/png'};await route.fulfill({status:200,contentType:types[ext],body:fs.readFileSync(path.join(ASSETS,name))});});
   const page=await ctx.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(BASE+'index.html');await page.waitForFunction(()=>RaccoonFace.portrait.complete&&RaccoonFace.portrait.naturalWidth>0);
   await page.screenshot({path:path.join(QA,'home.png'),fullPage:true});
