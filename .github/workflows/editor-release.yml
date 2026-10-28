@@ -18,6 +18,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
       - name: Preparar SDK e dependencias fixadas
         run: |
           sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
@@ -27,14 +28,16 @@ jobs:
           bash build.sh
           bash tools/test-policies.sh
       - name: Preparar fonte e ferramentas para assinatura local
+        if: always()
         run: |
           mkdir -p /tmp/editor-bundle/source /tmp/editor-bundle/android-sdk/build-tools /tmp/editor-bundle/android-sdk/platforms
           tar --exclude='./.git' --exclude='./build' --exclude='./downloads' --exclude='./node_modules' --exclude='./.gradle' -cf - . | tar -xf - -C /tmp/editor-bundle/source
-          cp -a "$ANDROID_HOME/build-tools/35.0.0" /tmp/editor-bundle/android-sdk/build-tools/
-          cp -a "$ANDROID_HOME/platforms/android-35" /tmp/editor-bundle/android-sdk/platforms/
-          cp build/RaccoonStudio-debug.apk /tmp/editor-bundle/
-          cp build/native/build-verification.json /tmp/editor-bundle/
+          if [ -d "$ANDROID_HOME/build-tools/35.0.0" ]; then cp -a "$ANDROID_HOME/build-tools/35.0.0" /tmp/editor-bundle/android-sdk/build-tools/; fi
+          if [ -d "$ANDROID_HOME/platforms/android-35" ]; then cp -a "$ANDROID_HOME/platforms/android-35" /tmp/editor-bundle/android-sdk/platforms/; fi
+          if [ -f build/RaccoonStudio-debug.apk ]; then cp build/RaccoonStudio-debug.apk /tmp/editor-bundle/; fi
+          if [ -f build/native/build-verification.json ]; then cp build/native/build-verification.json /tmp/editor-bundle/; fi
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
           name: editor-build-source
           path: /tmp/editor-bundle/
